@@ -22,7 +22,20 @@
 			'CM': 900,
 			'M': 1000
 		};
+
+
+		var isDupleRomanNmeral = function(inputSubString) {
+		  var duples = ['IV','IX', 'XL', 'XC', 'CD', 'CM'];
+          for(var i = 0; i <= 5; i++){
+            if(duples[i] === inputSubString){
+              return true;
+            }
+          }
+          return false;
+		};
 		
+		console.log('isDupleRomanNmeral(IX)', isDupleRomanNmeral('IX') );
+		console.log('isDupleRomanNmeral(X)', isDupleRomanNmeral('X') );
 
 		
 		var parseRomanInput = function(inputString){
