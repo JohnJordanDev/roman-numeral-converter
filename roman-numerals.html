@@ -25,29 +25,45 @@
 
 
 		var isDupleRomanNmeral = function(inputSubString) {
+
 		  var duples = ['IV','IX', 'XL', 'XC', 'CD', 'CM'];
-          for(var i = 0; i <= 5; i++){
-            if(duples[i] === inputSubString){
-              return true;
-            }
+
+          for(var i = 0; i < 6; i++){
+
+            if(duples[i] === inputSubString) return true;  
           }
           return false;
 		};
-		
-		console.log('isDupleRomanNmeral(IX)', isDupleRomanNmeral('IX') );
-		console.log('isDupleRomanNmeral(X)', isDupleRomanNmeral('X') );
 
-		
 		var parseRomanInput = function(inputString){
-			if(inputString.length < 1) {
-				return '';
-			} else {
-				return [inputString.substring(0,1)].concat(parseRomanInput(inputString.substring(1)));
-			}
+
+			if(inputString.length < 1) return false;
+
+			if(isDupleRomanNmeral(inputString.substring(0,2)) ) return [inputString.substring(0,2)].concat(parseRomanInput(inputString.substring(2)));
+
+			return [inputString.substring(0,1)].concat(parseRomanInput(inputString.substring(1)));
+
 		};
 
-		var y =parseRomanInput('aadh');
-		console.log(y, dictRomanToDecimal);
+		var getValueOfRomanNumeral= function(romanNumeral){
+
+				return dictRomanToDecimal[romanNumeral] || 0;
+		};
+
+		var countRomanNumerals = function(listRomanNumerals){
+			var count = 0, l = listRomanNumerals.length;
+			for(var i = 0; i < l; i++ ){
+				count += getValueOfRomanNumeral(listRomanNumerals[i]);
+			}
+			return count;
+		};
+
+		var input = 'MCMLXXVIII';
+
+		var y = parseRomanInput(input);
+		
+		document.write('<div> "'+ input + '" is the year: ' +  countRomanNumerals(y) + '</div>');
+
 		
 	</script>
 </body>
