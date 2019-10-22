@@ -2,9 +2,98 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Roman Numeral</title>
+	<style>
+
+		* {
+			box-sizing: border-box;
+			
+		}
+
+		html, body {
+			height: 100%;
+		}
+
+		body {
+			margin: 0;
+		}
+
+		body * {
+			border: solid 1px black;
+			text-align: center;
+		}
+
+		main {
+			display: inline-block;
+			width: 70%;
+			margin: 0 15%;
+		}
+
+		.sidebar-banner, main {
+			height: 100%; /* fallback*/
+			height: calc(100% - 20px);
+		}
+
+		.sidebar-banner {
+			display: table;
+			width: 15%;
+			position: absolute;
+			top: 0;
+		}
+
+		.sidebar-banner .icon-wrapper {
+			text-align: center;
+			vertical-align: middle;
+			display: table-cell;
+			line-height: 100px;
+			font-size: 48px;
+		}
+
+		.--left {
+			left: 0;
+		}
+
+		.--right {
+			right: 0;
+		}
+
+
+		footer {
+			background-color: green;
+			position: absolute;
+			bottom: 0;
+			width: 100%
+		}
+
+	</style>
 </head>
 <body>
+	<nav></nav>
+	
+	<div class="sidebar-banner --left">
+		<div class="icon-wrapper">
+			<div>I</div>
+			<div>II</div>
+			<div>III</div>
+			<div>IV</div>
+			<div>V</div>
+		</div>
+		
+	</div><main id="main_content">
+	 	<header>
+			<h1>Roman Numeral Converter</h1>
+	  	</header>
+	</main><div class="sidebar-banner --right">
+		<div class="icon-wrapper">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+		</div>
+	</div>
+	<footer>The footer</footer>
 	<script>
 		
 		var dictRomanToDecimal = {
@@ -62,7 +151,7 @@
 
 		var y = parseRomanInput(input);
 		
-		document.write('<div> "'+ input + '" is the year: ' +  countRomanNumerals(y) + '</div>');
+		document.getElementById('main_content').innerHTML = '<div>' + input + ' is the year: ' + countRomanNumerals(y) + '</div>';
 
 		
 	</script>
