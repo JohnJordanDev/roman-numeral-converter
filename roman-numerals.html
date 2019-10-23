@@ -8,7 +8,7 @@
 
 		* {
 			box-sizing: border-box;
-			
+
 		}
 
 		html, body {
@@ -17,6 +17,7 @@
 
 		body {
 			margin: 0;
+			min-height: 100%;
 		}
 
 		body * {
@@ -58,6 +59,11 @@
 			right: 0;
 		}
 
+		output {
+			display: block;
+			text-align: center;
+		}
+
 
 		footer {
 			background-color: green;
@@ -84,6 +90,27 @@
 	 	<header>
 			<h1>Roman Numeral Converter</h1>
 	  	</header>
+	  	<section>
+	  		<output id="result_indo" name="result" for="input_roman"></output>
+	  		<output id="input_roman" name="input"></output>
+	  	</section>
+	  	<section>
+	  		<div class="row">
+	  			<button>M</button>
+	  			<button>D</button>
+	  			<button>C</button>
+	  		</div>
+	  		<div class="row">
+	  			<button>L</button>
+	  			<button>X</button>
+	  			<button>V</button>
+	  		</div>
+	  		<div class="row">
+	  			<button disabled="disabled" style="opacity: 0"></button>
+	  			<button>I</button>
+	  			<button><</button>
+	  		</div>
+	  	</section>
 	</main><div class="sidebar-banner --right">
 		<div class="icon-wrapper">
 			<div>1</div>
@@ -151,7 +178,8 @@
 
 		var y = parseRomanInput(input);
 		
-		document.getElementById('main_content').innerHTML = '<div>' + input + ' is the year: ' + countRomanNumerals(y) + '</div>';
+		document.getElementById('input_roman').innerHTML = input;
+		document.getElementById('result_indo').innerHTML = countRomanNumerals(y);
 
 		
 	</script>
