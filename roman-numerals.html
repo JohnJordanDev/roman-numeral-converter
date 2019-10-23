@@ -94,21 +94,21 @@
 	  		<output id="result_indo" name="result" for="input_roman"></output>
 	  		<output id="input_roman" name="input"></output>
 	  	</section>
-	  	<section>
+	  	<section id="numeral_input_pad">
 	  		<div class="row">
-	  			<button>M</button>
-	  			<button>D</button>
-	  			<button>C</button>
+	  			<button class="numeral" data-ctx="3">M</button>
+	  			<button class="numeral" data-ctx="2">D</button>
+	  			<button class="numeral" data-ctx="2">C</button>
 	  		</div>
 	  		<div class="row">
-	  			<button>L</button>
-	  			<button>X</button>
-	  			<button>V</button>
+	  			<button class="numeral" data-ctx="1">L</button>
+	  			<button class="numeral" data-ctx="1">X</button>
+	  			<button class="numeral" data-ctx="1">V</button>
 	  		</div>
 	  		<div class="row">
 	  			<button disabled="disabled" style="opacity: 0"></button>
-	  			<button>I</button>
-	  			<button><</button>
+	  			<button class="numeral" data-ctx="0">I</button>
+	  			<button class="delete"><</button>
 	  		</div>
 	  	</section>
 	</main><div class="sidebar-banner --right">
@@ -122,6 +122,8 @@
 	</div>
 	<footer>The footer</footer>
 	<script>
+
+		/* Raw Roman to Indo Numeral Processing */
 		
 		var dictRomanToDecimal = {
 			'I': 1,
@@ -174,14 +176,25 @@
 			return count;
 		};
 
-		var input = 'MCMLXXVIII';
+		/* Input/Output Processing */
 
-		var y = parseRomanInput(input);
+		var inputRoman = document.getElementById('input_roman');
+		var resultIndo = document.getElementById('result_indo');
 		
-		document.getElementById('input_roman').innerHTML = input;
-		document.getElementById('result_indo').innerHTML = countRomanNumerals(y);
+		document
+			.getElementById('numeral_input_pad')
+			.addEventListener('click', 
+				function(event){
 
-		
+				  if(event.target.classList.contains('numeral')) {
+				  	 inputRoman.textContent = inputRoman.textContent + event.target.textContent;
+				  } else {
+				  	 inputRoman.textContent = inputRoman.textContent.slice(0,-1);
+				  }
+				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));
+	 		    }, 
+	 		false);
+
 	</script>
 </body>
 </html>
