@@ -6,49 +6,90 @@
 	<title>Roman Numeral</title>
 	<style>
 
+		/* Typography */
+
+		header, section, button, output {
+			font-size: 3rem;
+			line-height: 2;
+		}
+
+		.placeholder {
+			font-size: 1.5rem;
+		}
+
+		/* Layout */
+
 		* {
 			box-sizing: border-box;
 
 		}
 
-		html, body {
+		html {
 			height: 100%;
 		}
 
 		body {
 			margin: 0;
 			min-height: 100%;
+			height: auto;
+			text-align: center;
+			position: relative;
 		}
 
 		body * {
 			border: solid 1px black;
-			text-align: center;
+		}
+
+		h1,h2,p {
+			margin: 0;
+		}
+
+		h1 {
+			font-size: 3rem;
+		}
+
+		header, section {
+			margin-bottom: 6rem;
+		}
+
+		output {
+			min-height: 6rem;
+		}
+
+		section > .row {
+			margin-bottom: 3rem;
+		}
+
+		.numeral, .delete {
+			width: 6rem;
 		}
 
 		main {
-			display: inline-block;
-			width: 70%;
-			margin: 0 15%;
+			padding: 0 15px;
 		}
 
 		.sidebar-banner, main {
 			height: 100%; /* fallback*/
-			height: calc(100% - 20px);
 		}
 
 		.sidebar-banner {
-			display: table;
+			display: none;
 			width: 15%;
 			position: absolute;
 			top: 0;
+			bottom: 0;
 		}
 
 		.sidebar-banner .icon-wrapper {
 			text-align: center;
 			vertical-align: middle;
 			display: table-cell;
-			line-height: 100px;
-			font-size: 48px;
+			line-height: 9rem;
+			font-size: 6rem;
+		}
+
+		.sidebar-banner .icon-wrapper > div {
+			padding: 1rem 0;
 		}
 
 		.--left {
@@ -72,6 +113,21 @@
 			width: 100%
 		}
 
+		@media only screen and (min-width: 768px){
+
+			.sidebar-banner {
+			  display: table;
+		  }
+
+		  	main {
+			  display: inline-block;
+			  width: 70%;
+			  margin: 0 15%;
+			  padding: 0;
+		 }
+
+		}
+
 	</style>
 </head>
 <body>
@@ -91,8 +147,11 @@
 			<h1>Roman Numeral Converter</h1>
 	  	</header>
 	  	<section>
-	  		<output id="result_indo" name="result" for="input_roman"></output>
-	  		<output id="input_roman" name="input"></output>
+	  		<output id="result_indo" name="result" for="input_roman">
+	  			<span class="placeholder">Converted number will appear here</span>
+	  		</output>
+	  		<output id="input_roman" name="input">
+	  		</output>
 	  	</section>
 	  	<section id="numeral_input_pad">
 	  		<div class="row">
@@ -106,7 +165,7 @@
 	  			<button class="numeral" data-ctx="1">V</button>
 	  		</div>
 	  		<div class="row">
-	  			<button disabled="disabled" style="opacity: 0"></button>
+	  			<button class="numeral" disabled="disabled" style="opacity: 0"></button>
 	  			<button class="numeral" data-ctx="0">I</button>
 	  			<button class="delete"><</button>
 	  		</div>
@@ -141,6 +200,20 @@
 			'M': 1000
 		};
 
+		var countRomanNumerals = function(listRomanNumerals){
+			var count = 0, l = listRomanNumerals.length;
+			for(var i = 0; i < l; i++ ){
+				count += getValueOfRomanNumeral(listRomanNumerals[i]);
+			}
+			return count;
+		};
+
+
+		var getValueOfRomanNumeral= function(romanNumeral){
+
+				return dictRomanToDecimal[romanNumeral] || 0;
+		};
+
 
 		var isDupleRomanNmeral = function(inputSubString) {
 
@@ -163,19 +236,6 @@
 
 		};
 
-		var getValueOfRomanNumeral= function(romanNumeral){
-
-				return dictRomanToDecimal[romanNumeral] || 0;
-		};
-
-		var countRomanNumerals = function(listRomanNumerals){
-			var count = 0, l = listRomanNumerals.length;
-			for(var i = 0; i < l; i++ ){
-				count += getValueOfRomanNumeral(listRomanNumerals[i]);
-			}
-			return count;
-		};
-
 		/* Input/Output Processing */
 
 		var inputRoman = document.getElementById('input_roman');
@@ -185,13 +245,13 @@
 			.getElementById('numeral_input_pad')
 			.addEventListener('click', 
 				function(event){
-
 				  if(event.target.classList.contains('numeral')) {
-				  	 inputRoman.textContent = inputRoman.textContent + event.target.textContent;
+				  	 inputRoman.textContent += event.target.textContent;
 				  } else {
 				  	 inputRoman.textContent = inputRoman.textContent.slice(0,-1);
 				  }
 				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));
+				  console.log(inputRoman.innerText.slice(0,2));
 	 		    }, 
 	 		false);
 
