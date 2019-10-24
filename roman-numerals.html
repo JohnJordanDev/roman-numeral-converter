@@ -237,7 +237,24 @@
 		};
 
 		/* Input/Output Processing */
+		var ctxObj = (function(){
+			var _context = 0;
+			var getContext = function(){
+				return console.log(_context);
+			};
+			var setContext = function(val){
+				return _context = val;
+			};
+			return {
+				getContext: getContext,
+				setContext: setContext
+			};
+		}());
 
+		ctxObj.getContext();
+		ctxObj.setContext(10);
+		ctxObj.getContext();
+		
 		var inputRoman = document.getElementById('input_roman');
 		var resultIndo = document.getElementById('result_indo');
 		
