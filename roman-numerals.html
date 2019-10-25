@@ -48,7 +48,7 @@
 			font-size: 3rem;
 		}
 
-		header, section {
+		header {
 			margin-bottom: 6rem;
 		}
 
@@ -113,7 +113,7 @@
 			width: 100%
 		}
 
-		@media only screen and (min-width: 768px){
+		@media only screen and (min-width: 968px){
 
 			.sidebar-banner {
 			  display: table;
@@ -236,25 +236,44 @@
 
 		};
 
-		/* Input/Output Processing */
-		var ctxObj = (function(){
-			var _context = 0;
+		/* Time/Global Context Processing */
+		var cTXObj = (function(){
+			var _context = 3, _timeSpans = ['year', 'decade', 'century', 'millenium'];
 			var getContext = function(){
-				return console.log(_context);
+				return _context;
 			};
 			var setContext = function(val){
 				return _context = val;
 			};
+			var getTimeSpan = function(){
+				return _timeSpans[_context];
+			};
 			return {
 				getContext: getContext,
-				setContext: setContext
+				setContext: setContext,
+				getTimeSpan: getTimeSpan
 			};
 		}());
 
-		ctxObj.getContext();
-		ctxObj.setContext(10);
-		ctxObj.getContext();
-		
+		var getTimeIndexFromNumeral = function(numerals){
+			if(numerals === 'CM' || numerals === 'D' || numerals === 'C' || numerals === 'CD') return 2;
+			if(numerals === 'XC' || numerals === 'L' || numerals === 'X' || numerals === 'XL') return 1;
+			if(numerals === 'IX' || numerals === 'V' || numerals === 'I') return 0; 
+			return 3;
+		};
+
+		var updateCTXFromInput = function(input){
+			var subStrToTest, isDuple, ctxHoldVar, inputForIteration = input;
+			while(inputForIteration.length > 0){
+				subStrToTest = isDupleRomanNmeral(inputForIteration.slice(0,2)) ? inputForIteration.slice(0,2) : inputForIteration.slice(0,1) ;
+				cTXObj.setContext(getTimeIndexFromNumeral(subStrToTest));
+				inputForIteration = (subStrToTest.length === 2) ? inputForIteration.slice(2) : inputForIteration.slice(1);
+			}
+			console.log('Span is: ', cTXObj.getTimeSpan());
+		};
+
+
+		/* Input/Output Processing */
 		var inputRoman = document.getElementById('input_roman');
 		var resultIndo = document.getElementById('result_indo');
 		
@@ -268,7 +287,7 @@
 				  	 inputRoman.textContent = inputRoman.textContent.slice(0,-1);
 				  }
 				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));
-				  console.log(inputRoman.innerText.slice(0,2));
+				  updateCTXFromInput(inputRoman.innerText);
 	 		    }, 
 	 		false);
 
