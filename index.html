@@ -149,7 +149,7 @@
 	  		<output id="result_indo" name="result" for="input_roman">
 	  			<span class="placeholder">Converted number will appear here</span>
 	  		</output>
-	  		<output id="input_roman" name="input">
+	  		<output id="input_roman" name="input">&nbsp;
 	  		</output>
 	  	</section>
 	  	<section id="numeral_input_pad">
@@ -161,7 +161,7 @@
 	  		<div class="row">
 	  			<button class="numeral" data-ctx="1">L</button>
 	  			<button class="numeral" data-ctx="1">X</button>
-	  			<button class="numeral" data-ctx="1">V</button>
+	  			<button class="numeral" data-ctx="0">V</button>
 	  		</div>
 	  		<div class="row">
 	  			<button class="numeral" disabled="disabled" style="opacity: 0"></button>
@@ -271,6 +271,16 @@
 			console.log('Span is: ', cTXObj.getTimeSpan());
 		};
 
+		var allNumerals = document.querySelectorAll('#numeral_input_pad > .row > .numeral');
+
+		var updateElementsCTX = function(numerals){
+         for(var i = 0; i < numerals.length; i++ ) {
+         	if (numerals[i].getAttribute('data-ctx') > cTXObj.getContext()) {
+				console.log(numerals[i], ' is outwith current context of: ', cTXObj.getContext());
+         	}
+         }
+		};
+
 
 		/* Input/Output Processing */
 		var inputRoman = document.getElementById('input_roman');
@@ -287,6 +297,7 @@
 				  }
 				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));
 				  updateCTXFromInput(inputRoman.innerText);
+				  updateElementsCTX(allNumerals);
 	 		    }, 
 	 		false);
 
