@@ -60,7 +60,7 @@
 			margin-bottom: 3rem;
 		}
 
-		.numeral, .delete {
+		.numeral, .delete, .spacer {
 			width: 6rem;
 		}
 
@@ -153,23 +153,22 @@
 	  		<output id="result_indo" name="result" for="input_roman">
 	  			<span class="placeholder">Converted number will appear here</span>
 	  		</output>
-	  		<output id="input_roman" name="input">&nbsp;
-	  		</output>
+	  		<output id="input_roman" name="input"></output>
 	  	</section>
 	  	<section id="numeral_input_pad">
 	  		<div class="row">
-	  			<button class="numeral" data-ctx="3" value="M">M</button>
-	  			<button class="numeral" data-ctx="2" value="D">D</button>
-	  			<button class="numeral" data-ctx="2" value="C">C</button>
+	  			<button class="numeral" data-index="0" data-ctx="3" value="M">M</button>
+	  			<button class="numeral" data-index="1" data-ctx="2" value="D">D</button>
+	  			<button class="numeral" data-index="2" data-ctx="2" value="C">C</button>
 	  		</div>
 	  		<div class="row">
-	  			<button class="numeral" data-ctx="1" value="L">L</button>
-	  			<button class="numeral" data-ctx="1" value="X">X</button>
-	  			<button class="numeral" data-ctx="0" value="V">V</button>
+	  			<button class="numeral" data-index="3" data-ctx="1" value="L">L</button>
+	  			<button class="numeral" data-index="4" data-ctx="1" value="X">X</button>
+	  			<button class="numeral" data-index="5" data-ctx="0" value="V">V</button>
 	  		</div>
 	  		<div class="row">
-	  			<button class="numeral" disabled="disabled" style="opacity: 0"></button>
-	  			<button class="numeral" data-ctx="0" value="I">I</button>
+	  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
+	  			<button class="numeral" data-index="6" data-ctx="0" value="I">I</button>
 	  			<button class="delete"><</button>
 	  		</div>
 	  	</section>
@@ -240,72 +239,51 @@
 		};
 
 		/* Time/Global Context Processing */
-		var cTXObj = (function(){
-			var _context = 3, _timeSpans = ['year', 'decade', 'century', 'millenium'];
-			var getContext = function(){
-				return _context;
-			};
-			var setContext = function(val){
-				_context = parseInt(val, 10);
-			};
-			var getTimeSpan = function(){
-				return _timeSpans[_context];
-			};
-			return {
-				getContext: getContext,
-				setContext: setContext,
-				getTimeSpan: getTimeSpan
-			};
-		}());
 
-		// var getTimeIndexFromNumeral = function(numerals){
-		// 	if(numerals === 'CM' || numerals === 'D' || numerals === 'C' || numerals === 'CD') return 2;
-		// 	if(numerals === 'XC' || numerals === 'L' || numerals === 'X' || numerals === 'XL') return 1;
-		// 	if(numerals === 'IX' || numerals === 'V' || numerals === 'I') return 0; 
-		// 	return 3;
-		// };
-
-		// var updateCTXFromInput = function(input){
-		// 	var subStrToTest, isDuple, ctxHoldVar, inputForIteration = input;
-		// 	while(inputForIteration.length > 0){
-		// 		console.log('input is: ', inputForIteration);
-		// 		subStrToTest = isDupleRomanNmeral(inputForIteration.slice(0,2)) ? inputForIteration.slice(0,2) : inputForIteration.slice(0,1) ;
-		// 		cTXObj.setContext(getTimeIndexFromNumeral(subStrToTest));
-		// 		inputForIteration = (subStrToTest.length === 2) ? inputForIteration.slice(2) : inputForIteration.slice(1);
-		// 	}
-		// 	console.log('Span is: ', cTXObj.getTimeSpan());
-		// };
 
 		var allNumerals = document.querySelectorAll('#numeral_input_pad > .row > .numeral');
+		console.log(allNumerals);
 
-		// var updateElementsCTX = function(numerals){
-	 //        for(var i = 0; i < numerals.length; i++ ) {
-	 //         	if (numerals[i].getAttribute('data-ctx') > cTXObj.getContext()) {
-		// 			numerals[i].disabled = true;
-	 //         	} else {
-	 //         		numerals[i].disabled = false;
-	 //         	} 
-	 //        }
-		// };
 
-		var markFivesOut = function(eventTarget) {
-			if(eventTarget.value === 'D' || eventTarget.value === 'L' || eventTarget.value === 'V') {
-				eventTarget.disabled = true;
-				return cTXObj.setContext(eventTarget.getAttribute('data-ctx'));
-			}
-			return cTXObj.setContext(eventTarget.getAttribute('data-ctx') + 1);
-		}
-
-		var unMarkFives = function(input){
-			
-			if(input.slice(-1) === 'D' || input.slice(-1) === 'L' || input.slice(-1) === 'V'){
-				var inputElem = document.querySelectorAll('[value="' + input.slice(-1) + '"]')[0]; 
-				
-				cTXObj.setContext(parseInt(inputElem.dataset.ctx ) + 1);
-				console.log(cTXObj.getContext());
-				return inputElem.disabled = false;
+		var setBtnDisabledProp = function(startIndex, stopIndex, value){
+			for(var i = startIndex; i <= stopIndex; i++){
+				allNumerals[i].disabled = value;
 			}
 		};
+
+		var processFiveMultNumeral = function(dataIndex){
+			if(inputRoman.textContent.length === 0) {
+				setBtnDisabledProp(0, dataIndex, true);
+
+			} else {
+				
+				if(event.target.value === 'D') {
+					setBtnDisabledProp(0, parseInt(dataIndex) + 1, true);
+				} else {
+					setBtnDisabledProp(0,  parseInt(dataIndex), true);
+				}
+			}
+		};
+
+		var potentialDuple = function() {
+			console.log(inputRoman.textContent.slice(-1) !== inputRoman.textContent.slice(-2));
+			
+			return inputRoman.textContent.slice(-1) !== inputRoman.textContent.slice(-2);
+		};
+
+		var processTenMultNumeral = function(dataIndex) {
+			if(inputRoman.textContent.length === 0) {
+				setBtnDisabledProp(0, parseInt(dataIndex) - 3, true);
+
+			} else {
+				if(potentialDuple()) {
+					setBtnDisabledProp(0, parseInt(dataIndex) - 2, true);
+				} else {
+					setBtnDisabledProp(0,  parseInt(dataIndex), true);
+				}
+			}
+		};
+
 
 
 		/* Input/Output Processing */
@@ -317,24 +295,28 @@
 			.addEventListener('click', 
 				function(event){
 				  if(event.target.classList.contains('numeral')) {
-				  	 markFivesOut(event.target);
-				  	 inputRoman.textContent += event.target.textContent;
-				  	 // updateElementsCTX(allNumerals);
+				  	 
+					if(event.target.value === 'D' ||event.target.value === 'L' || event.target.value === 'V') {
 
+						processFiveMultNumeral(event.target.dataset.index);
+
+					} else {
+					
+						processTenMultNumeral(event.target.dataset.index);
+					}
+
+				  	
+				  	inputRoman.textContent += event.target.textContent;
+				  	 
 
 				  } else {
-				  	 unMarkFives(inputRoman.textContent);
-				  	 // console.log(inputRoman.textContent);
+				  	 
+				  	 
 				  	 inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-				  	 // updateElementsCTX(allNumerals);
+				  	 
 				  }
 				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));
-				 //  if(inputRoman.textContent.replace(/\s/g, '').length >= 2) {
-				 //  	console.log(inputRoman.textContent.replace(/\s/g, '').length);
-					// test(inputRoman.textContent.replace(/\s/g, ''));
-				 //  }
-				  // updateCTXFromInput(inputRoman.innerText);
-		
+				 
 	 		    }, 
 	 		false);
 
