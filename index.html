@@ -251,16 +251,16 @@
 			}
 		};
 
-		var processFiveMultNumeral = function(dataIndex){
+		var processFiveMultNumeral = function(numeralIndex){
 			if(inputRoman.textContent.length === 0) {
-				setBtnDisabledProp(0, dataIndex, true);
+				setBtnDisabledProp(0, numeralIndex, true);
 
 			} else {
 				
 				if(event.target.value === 'D') {
-					setBtnDisabledProp(0, parseInt(dataIndex) + 1, true);
+					setBtnDisabledProp(0, parseInt(numeralIndex) + 1, true);
 				} else {
-					setBtnDisabledProp(0,  parseInt(dataIndex), true);
+					setBtnDisabledProp(0,  parseInt(numeralIndex), true);
 				}
 			}
 		};
@@ -271,19 +271,34 @@
 			return inputRoman.textContent.slice(-1) !== inputRoman.textContent.slice(-2);
 		};
 
-		var processTenMultNumeral = function(dataIndex) {
+		var processTenMultNumeral = function(numeralIndex) {
 			if(inputRoman.textContent.length === 0) {
-				setBtnDisabledProp(0, parseInt(dataIndex) - 3, true);
+				setBtnDisabledProp(0, parseInt(numeralIndex) - 3, true);
 
 			} else {
 				if(potentialDuple()) {
-					setBtnDisabledProp(0, parseInt(dataIndex) - 2, true);
+					setBtnDisabledProp(0, parseInt(numeralIndex) - 2, true);
 				} else {
-					setBtnDisabledProp(0,  parseInt(dataIndex), true);
+					setBtnDisabledProp(0,  parseInt(numeralIndex) -1 , true);
 				}
 			}
 		};
 
+		var runRuleOfThrees = function(numeralValue, numeralIndex){
+			var triple = numeralValue + numeralValue + numeralValue;
+			if(inputRoman.textContent.slice(-3) === triple){
+				allNumerals[numeralIndex].disabled = true;
+			}
+
+		};
+
+		var runDigraphPurge = function(){
+			var mostRecentDigraph = inputRoman.textContent.slice(-2);
+			if(isDupleRomanNmeral(mostRecentDigraph)){
+				var firstNumeralElem = document.querySelector('[value=' + mostRecentDigraph[0] + ']');
+				setBtnDisabledProp(0, firstNumeralElem.dataset.index, true);
+			}
+		}
 
 
 		/* Input/Output Processing */
@@ -300,16 +315,21 @@
 
 						processFiveMultNumeral(event.target.dataset.index);
 
-					} else {
+					} else if(event.target.value === 'M' ||event.target.value === 'C' || event.target.value === 'X') {
 					
 						processTenMultNumeral(event.target.dataset.index);
+
+					} else {
+						setBtnDisabledProp(0, 3, true);
 					}
 
 				  	
 				  	inputRoman.textContent += event.target.textContent;
+				  	runRuleOfThrees(event.target.value, event.target.dataset.index);
+				  	runDigraphPurge();
 				  	 
 
-				  } else {
+				  } else if(event.target.classList.contains('delete')) {
 				  	 
 				  	 
 				  	 inputRoman.textContent = inputRoman.textContent.slice(0,-1);
