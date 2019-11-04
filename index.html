@@ -292,10 +292,11 @@
 		// };
 
 		var runRuleOfThrees = function(numeralValue, numeralIndex){
-			var triple = numeralValue + numeralValue + numeralValue;
-			if(inputRoman.textContent.slice(-2) + numeralValue === triple){
-				allNumerals[numeralIndex].disabled = true;
-			}
+			// var triple = numeralValue + numeralValue + numeralValue;
+			// if(inputRoman.textContent.slice(-2) + numeralValue === triple){
+			// 	allNumerals[numeralIndex].disabled = true;
+			// }
+			/*TODO: Refactor to use a count of characters intotal, not a mere run. */
 
 		};
 
@@ -320,13 +321,19 @@
 		/* Individual Numeral Processing */
 		var process_M_Num = function(latestNumeral){
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
-				allNumerals[0].disabled = true;
+				setBtnDisabledProp(0,2,true);
 			}
 		};
 
-		var process_D_Num = function(){};
+		var process_D_Num = function(latestNumera){
+			setBtnDisabledProp(0,1,true);
+		};
 
-		var process_C_Num = function(){};
+		var process_C_Num = function(latestNumeral){
+			if( (inputRoman.textContent.match(/CM/g) || inputRoman.textContent.match(/D/g) || []).length === 0){
+				allNumerals[0].disabled = false;
+			}
+		};
 
 		var process_L_Num = function(){};
 
@@ -358,9 +365,10 @@
 
 				  if(event.target.classList.contains('numeral')) {
 				  	 var latestNumeral = event.target.value;
-				     runRuleOfThrees(latestNumeral, event.target.dataset.index);
 				     console.log(parseInt(event.target.dataset.index));
 				     allFunctions[parseInt(event.target.dataset.index)](latestNumeral);
+				     runRuleOfThrees(latestNumeral, event.target.dataset.index);
+
 				     
 				  	 
 					// if(latestNumeral === 'D' ||latestNumeral === 'L' || latestNumeral === 'V') {
