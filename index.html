@@ -245,50 +245,51 @@
 		console.log(allNumerals);
 
 
+
 		var setBtnDisabledProp = function(startIndex, stopIndex, value){
 			for(var i = startIndex; i <= stopIndex; i++){
 				allNumerals[i].disabled = value;
 			}
 		};
 
-		var processFiveMultNumeral = function(latestNumeral, latestNumeralIndex){
-			// console.log('processing a fifth', latestNumeral, latestNumeralIndex);
-			setBtnDisabledProp(0,  parseInt(latestNumeralIndex), true);
-			if(latestNumeral === "D"){
-				processCenturyDigraph(latestNumeral);
-			}
+		// var processFiveMultNumeral = function(latestNumeral, latestNumeralIndex){
+		// 	// console.log('processing a fifth', latestNumeral, latestNumeralIndex);
+		// 	setBtnDisabledProp(0,  parseInt(latestNumeralIndex), true);
+		// 	if(latestNumeral === "D"){
+		// 		processCenturyDigraph(latestNumeral);
+		// 	}
 			
-		};
+		// };
 
 		
-		var processCenturyDigraph = function(latestNumeral) {
-			if(inputRoman.textContent.slice(-1) + latestNumeral  === 'CD') {
-				setBtnDisabledProp(0,  2, true);
-			} else if(inputRoman.textContent.slice(-2) === 'CM') {
-				setBtnDisabledProp(0,  0, true);
-			}
-		};
+		// var processCenturyDigraph = function(latestNumeral) {
+		// 	if(inputRoman.textContent.slice(-1) + latestNumeral  === 'CD') {
+		// 		setBtnDisabledProp(0,  2, true);
+		// 	} else if(inputRoman.textContent.slice(-2) === 'CM') {
+		// 		setBtnDisabledProp(0,  0, true);
+		// 	}
+		// };
 
-		var processTenMultNumeral = function(latestNumeral, latestNumeralIndex) {
-			var latestDuo = inputRoman.textContent.slice(-1) + latestNumeral;
-			console.log('latest Duo is: ', latestDuo);
+		// var processTenMultNumeral = function(latestNumeral, latestNumeralIndex) {
+		// 	var latestDuo = inputRoman.textContent.slice(-1) + latestNumeral;
+		// 	console.log('latest Duo is: ', latestDuo);
 
-			if(inputRoman.textContent.length === 0) {
-				setBtnDisabledProp(0, parseInt(latestNumeralIndex) - 3, true);
+		// 	if(inputRoman.textContent.length === 0) {
+		// 		setBtnDisabledProp(0, parseInt(latestNumeralIndex) - 3, true);
 
-			} 
+		// 	} 
 
-			if( latestDuo === "MC")  {
-				allNumerals[0].disabled = false;
+		// 	if( latestDuo === "MC")  {
+		// 		allNumerals[0].disabled = false;
 
-			} else {
-				if(inputRoman.textContent.slice(-1) === latestNumeral) {
-					setBtnDisabledProp(0, parseInt(latestNumeralIndex) - 1, true);
-				} else {
-					setBtnDisabledProp(0,  parseInt(latestNumeralIndex) -2 , true);
-				}
-			}
-		};
+		// 	} else {
+		// 		if(inputRoman.textContent.slice(-1) === latestNumeral) {
+		// 			setBtnDisabledProp(0, parseInt(latestNumeralIndex) - 1, true);
+		// 		} else {
+		// 			setBtnDisabledProp(0,  parseInt(latestNumeralIndex) -2 , true);
+		// 		}
+		// 	}
+		// };
 
 		var runRuleOfThrees = function(numeralValue, numeralIndex){
 			var triple = numeralValue + numeralValue + numeralValue;
@@ -298,18 +299,18 @@
 
 		};
 
-		var runUnitDigraphPurge = function(romanNumeralSlice){
-			if(romanNumeralSlice === 'IX' || romanNumeralSlice === 'IV'){
-				var firstNumeralElem = document.querySelector('[value=' + romanNumeralSlice[0] + ']');
-				setBtnDisabledProp(0, firstNumeralElem.dataset.index, true);
-			}
-		}
+		// var runUnitDigraphPurge = function(romanNumeralSlice){
+		// 	if(romanNumeralSlice === 'IX' || romanNumeralSlice === 'IV'){
+		// 		var firstNumeralElem = document.querySelector('[value=' + romanNumeralSlice[0] + ']');
+		// 		setBtnDisabledProp(0, firstNumeralElem.dataset.index, true);
+		// 	}
+		// }
 
-		var reEnableCentNumeral = function(lastNumeral) {
-			if(lastNumeral === 'X' && allNumerals[2].disabled === true) {
-				return allNumerals[2].disabled = false;
-			}
-		};
+		// var reEnableCentNumeral = function(lastNumeral) {
+		// 	if(lastNumeral === 'X' && allNumerals[2].disabled === true) {
+		// 		return allNumerals[2].disabled = false;
+		// 	}
+		// };
 
 
 		/* Input/Output Processing */
@@ -317,12 +318,36 @@
 		var resultIndo = document.getElementById('result_indo');
 
 		/* Individual Numeral Processing */
-		var processMilliNumeral = function(latestNumeral){
+		var process_M_Num = function(latestNumeral){
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
-				console.log('CMs entered');
 				allNumerals[0].disabled = true;
 			}
 		};
+
+		var process_D_Num = function(){};
+
+		var process_C_Num = function(){};
+
+		var process_L_Num = function(){};
+
+		var process_X_Num = function(){};
+
+		var process_V_Num = function(){};
+
+		var process_I_Num = function(){
+			setBtnDisabledProp(0, 3, true);
+		};
+
+		var allFunctions = [
+			process_M_Num, 
+			process_D_Num, 
+			process_C_Num,  
+			process_L_Num,  
+			process_X_Num,  
+			process_V_Num,  
+			process_I_Num
+		];
+
 
 		
 		document
@@ -334,24 +359,23 @@
 				  if(event.target.classList.contains('numeral')) {
 				  	 var latestNumeral = event.target.value;
 				     runRuleOfThrees(latestNumeral, event.target.dataset.index);
-				     if(latestNumeral === 'M') {
-						processMilliNumeral(latestNumeral);
-				     }
+				     console.log(parseInt(event.target.dataset.index));
+				     allFunctions[parseInt(event.target.dataset.index)](latestNumeral);
+				     
 				  	 
-					if(latestNumeral === 'D' ||latestNumeral === 'L' || latestNumeral === 'V') {
+					// if(latestNumeral === 'D' ||latestNumeral === 'L' || latestNumeral === 'V') {
 
-						processFiveMultNumeral(latestNumeral, event.target.dataset.index);
+					// 	processFiveMultNumeral(latestNumeral, event.target.dataset.index);
 
-					} else if(latestNumeral === 'C' || latestNumeral === 'X') {
+					// } else if(latestNumeral === 'C' || latestNumeral === 'X') {
 					
-						processTenMultNumeral(latestNumeral, event.target.dataset.index);
+					// 	processTenMultNumeral(latestNumeral, event.target.dataset.index);
 
-					} else if(latestNumeral === 'I' ) {
-						setBtnDisabledProp(0, 3, true);
+					// } else if(latestNumeral === 'I' ) {
+					// 	setBtnDisabledProp(0, 3, true);
 						
-					}
-
-				  	
+					// }
+  	
 				  	inputRoman.textContent += latestNumeral;
 				  	
 				  	 
