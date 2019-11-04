@@ -360,45 +360,24 @@
 		];
 
 
-		
 		document
 			.getElementById('numeral_input_pad')
 			.addEventListener('click', 
 				function(event){
 				 
-
 				  if(event.target.classList.contains('numeral')) {
-				  	 var latestNumeral = event.target.value;
-				     console.log(parseInt(event.target.dataset.index));
-				     allFunctions[parseInt(event.target.dataset.index)](latestNumeral);
-				     runRuleOfThrees(latestNumeral, event.target.dataset.index);
-
-				     
-				  	 
-					// if(latestNumeral === 'D' ||latestNumeral === 'L' || latestNumeral === 'V') {
-
-					// 	processFiveMultNumeral(latestNumeral, event.target.dataset.index);
-
-					// } else if(latestNumeral === 'C' || latestNumeral === 'X') {
-					
-					// 	processTenMultNumeral(latestNumeral, event.target.dataset.index);
-
-					// } else if(latestNumeral === 'I' ) {
-					// 	setBtnDisabledProp(0, 3, true);
-						
-					// }
+				  	
+				    allFunctions[parseInt(event.target.dataset.index)](event.target.value);
+				    runRuleOfThrees(latestNumeral, event.target.dataset.index);
   	
 				  	inputRoman.textContent += latestNumeral;
-				  	
-				  	 
-
+				    resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));		 
+  	 	 
 				  } else if(event.target.classList.contains('delete')) {
-				  	 
-				  	 
+				  	   	 
 				  	 inputRoman.textContent = inputRoman.textContent.slice(0,-1);
 				  	 
 				  }
-				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));		 
 	 		    }, 
 	 		false);
 
