@@ -317,8 +317,11 @@
 		var resultIndo = document.getElementById('result_indo');
 
 		/* Individual Numeral Processing */
-		var processMilliNumeral = function(){
-			
+		var processMilliNumeral = function(latestNumeral){
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
+				console.log('CMs entered');
+				allNumerals[0].disabled = true;
+			}
 		};
 
 		
@@ -332,7 +335,7 @@
 				  	 var latestNumeral = event.target.value;
 				     runRuleOfThrees(latestNumeral, event.target.dataset.index);
 				     if(latestNumeral === 'M') {
-						processMilliNumeral();
+						processMilliNumeral(latestNumeral);
 				     }
 				  	 
 					if(latestNumeral === 'D' ||latestNumeral === 'L' || latestNumeral === 'V') {
@@ -343,7 +346,7 @@
 					
 						processTenMultNumeral(latestNumeral, event.target.dataset.index);
 
-					} else {
+					} else if(latestNumeral === 'I' ) {
 						setBtnDisabledProp(0, 3, true);
 						
 					}
