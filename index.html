@@ -292,10 +292,10 @@
 		// };
 
 		var runRuleOfThrees = function(numeralValue, numeralIndex){
-			// var triple = numeralValue + numeralValue + numeralValue;
-			// if(inputRoman.textContent.slice(-2) + numeralValue === triple){
-			// 	allNumerals[numeralIndex].disabled = true;
-			// }
+			var triple = numeralValue + numeralValue + numeralValue;
+			if(inputRoman.textContent.slice(-2) + numeralValue === triple){
+				allNumerals[numeralIndex].disabled = true;
+			}
 			/*TODO: Refactor to use a count of characters intotal, not a mere run. */
 
 		};
@@ -325,13 +325,19 @@
 			}
 		};
 
-		var process_D_Num = function(latestNumera){
-			setBtnDisabledProp(0,1,true);
+		var process_D_Num = function(latestNumeral){
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CD'){
+				return setBtnDisabledProp(0,2,true);
+			}
+			setBtnDisabledProp(0, 1, true);
 		};
 
 		var process_C_Num = function(latestNumeral){
 			if( (inputRoman.textContent.match(/CM/g) || inputRoman.textContent.match(/D/g) || []).length === 0){
-				allNumerals[0].disabled = false;
+				return allNumerals[0].disabled = false;
+			}
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XC'){
+				setBtnDisabledProp(0,3,true);
 			}
 		};
 
@@ -339,13 +345,23 @@
 			setBtnDisabledProp(0,3,true);
 		};
 
-		var process_X_Num = function(){};
-
-		var process_V_Num = function(){
-			setBtnDisabledProp(0,5,true);
+		var process_X_Num = function(){
+			if( (inputRoman.textContent.match(/XC/g) || []).length === 0){
+				return allNumerals[2].disabled = false;
+			}
+			if(inputRoman.textContent.slice(-1) === 'I' ){
+				setBtnDisabledProp(0,6,true);
+			}
 		};
 
-		var process_I_Num = function(){
+		var process_V_Num = function(){
+			if(inputRoman.textContent.slice(-1) === 'I' ){
+				return setBtnDisabledProp(0,6,true);
+			}
+			return setBtnDisabledProp(0,5,true);
+		};
+
+		var process_I_Num = function(latestNumeral){
 			setBtnDisabledProp(0, 3, true);
 		};
 
@@ -366,11 +382,11 @@
 				function(event){
 				 
 				  if(event.target.classList.contains('numeral')) {
-				  	
+
 				    allFunctions[parseInt(event.target.dataset.index)](event.target.value);
-				    runRuleOfThrees(latestNumeral, event.target.dataset.index);
+				    runRuleOfThrees(event.target.value, event.target.dataset.index);
   	
-				  	inputRoman.textContent += latestNumeral;
+				  	inputRoman.textContent += event.target.value;
 				    resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));		 
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
