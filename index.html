@@ -255,7 +255,7 @@
 			var triple = numeralValue + numeralValue + numeralValue;
 			if(currentInput.slice(-2) + numeralValue === triple){
 				return allNumerals[numeralIndex].disabled = true;
-			}
+			}			
 		};
 
 		var getIndexFromNumeral = function(numeral){
@@ -278,7 +278,7 @@
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
 				return setBtnDisabledProp(0,2,true);
 			}
-			console.log('M inputtd');
+			console.log('M inputted');
 			setBtnDisabledProp(0,6,false);
 		};
 
@@ -350,15 +350,18 @@
 				    resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));		 
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
-				  		// inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-				  		// console.log('current in put is:', inputRoman.textContent);
-				  		// var pseudoLatestNumeral = inputRoman.textContent.slice(-1) || 'M';
-				  		// console.log(pseudoLatestNumeral);
-				  		// var indexFromPseudo = getIndexFromNumeral(pseudoLatestNumeral) || 0;
-				  		// console.log(indexFromPseudo);
+				  		inputRoman.textContent = inputRoman.textContent.slice(0,-1);
+				  		console.log('current input is:', inputRoman.textContent);
+				  		var pseudoLatestNumeral = inputRoman.textContent.slice(-1) || 'M';
+				  		console.log(pseudoLatestNumeral);
+				  		var indexFromPseudo = getIndexFromNumeral(pseudoLatestNumeral) || 0;
+				  		console.log(indexFromPseudo);
+						if((inputRoman.textContent.match(/MMM/g) || []).length === 0) allNumerals[indexFromPseudo].disabled = false;
+
+
 
 				  		// allFunctions[parseInt(indexFromPseudo)](pseudoLatestNumeral);
-				    // 	runRuleOfThrees(pseudoLatestNumeral, indexFromPseudo, inputRoman.textContent); 	   	  	 
+				    	//runRuleOfThrees(pseudoLatestNumeral, indexFromPseudo, inputRoman.textContent); 	   	  	 
 				  }
 	 		    }, 
 	 		false);
