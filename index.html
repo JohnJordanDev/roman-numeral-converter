@@ -278,6 +278,8 @@
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
 				return setBtnDisabledProp(0,2,true);
 			}
+			console.log('M inputtd');
+			setBtnDisabledProp(0,6,false);
 		};
 
 		var process_D_Num = function(latestNumeral){
@@ -289,12 +291,14 @@
 
 		var process_C_Num = function(latestNumeral){
 			if( (inputRoman.textContent.match(/CM/g) || inputRoman.textContent.match(/D/g) || []).length === 0){
-				return allNumerals[0].disabled = false;
+				allNumerals[0].disabled = false;
 			}
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XC'){
 				return setBtnDisabledProp(0,3,true);
 			}
-			return allNumerals[2].disabled = false;
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CC') {
+				setBtnDisabledProp(0, 1, true);
+			}		
 		};
 
 		var process_L_Num = function(){
@@ -347,7 +351,7 @@
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
 				  		// inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-				  		// console.log(inputRoman.textContent);
+				  		// console.log('current in put is:', inputRoman.textContent);
 				  		// var pseudoLatestNumeral = inputRoman.textContent.slice(-1) || 'M';
 				  		// console.log(pseudoLatestNumeral);
 				  		// var indexFromPseudo = getIndexFromNumeral(pseudoLatestNumeral) || 0;
