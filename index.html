@@ -346,11 +346,17 @@
 			}
 		};
 
-		var pretend_C_Num,
-		pretend_L_Num,
-		pretend_X_Num,
-		pretend_V_Num,
-		pretend_I_Num;
+		var pretend_C_Num = function(pseudoLatestNumeral){
+			console.log('pretend_C_Num called with: ', pseudoLatestNumeral);
+			if((inputRoman.textContent.match(/CD/g) || inputRoman.textContent.match(/CM/g) || []).length === 0){
+				console.log('if statement entered');
+				setBtnDisabledProp(0,2,false);
+			} 
+		};
+		var pretend_L_Num =  function(pseudoLatestNumeral){};
+		var pretend_X_Num =  function(pseudoLatestNumeral){};
+		var pretend_V_Num =  function(pseudoLatestNumeral){};
+		var pretend_I_Num =  function(pseudoLatestNumeral){};
 
 		var allDeletionFunctions = [
 			pretend_M_Num, 
@@ -374,7 +380,7 @@
 				    runRuleOfThrees(event.target.value, event.target.dataset.index, inputRoman.textContent);
   	
 				  	inputRoman.textContent += event.target.value;
-				    resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));		 
+				   	 
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
 				  		inputRoman.textContent = inputRoman.textContent.slice(0,-1);
@@ -385,8 +391,9 @@
 				  		console.log(indexFromPseudo);
 						
 				  		allDeletionFunctions[parseInt(indexFromPseudo)](pseudoLatestNumeral);
-				    	runRuleOfThrees(pseudoLatestNumeral, indexFromPseudo, inputRoman.textContent); 	   	  	 
+				    	// runRuleOfThrees(pseudoLatestNumeral, indexFromPseudo, inputRoman.textContent); 	   	  	 
 				  }
+				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));	
 	 		    }, 
 	 		false);
 
