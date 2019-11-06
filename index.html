@@ -278,8 +278,6 @@
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
 				return setBtnDisabledProp(0,2,true);
 			}
-			console.log('M inputted');
-			setBtnDisabledProp(0,6,false);
 		};
 
 		var process_D_Num = function(latestNumeral){
@@ -325,7 +323,7 @@
 			setBtnDisabledProp(0, 3, true);
 		};
 
-		var allFunctions = [
+		var allInputFunctions = [
 			process_M_Num, 
 			process_D_Num, 
 			process_C_Num,  
@@ -333,6 +331,35 @@
 			process_X_Num,  
 			process_V_Num,  
 			process_I_Num
+		];
+
+		var pretend_M_Num = function(pseudoLatestNumeral){
+			if((inputRoman.textContent.match(/MMM/g) || []).length === 0){
+				allNumerals[0].disabled = false;	
+			} 
+			setBtnDisabledProp(0,6, false);
+		};
+
+		var pretend_D_Num = function(pseudoLatestNumeral){
+			if(pseudoLatestNumeral === 'M' && (inputRoman.textContent.match(/D/g) || []).length == 0){
+				// setBtnDisabledProp(1,2,false);
+			}
+		};
+
+		var pretend_C_Num,
+		pretend_L_Num,
+		pretend_X_Num,
+		pretend_V_Num,
+		pretend_I_Num;
+
+		var allDeletionFunctions = [
+			pretend_M_Num, 
+			pretend_D_Num, 
+			pretend_C_Num,  
+			pretend_L_Num,  
+			pretend_X_Num,  
+			pretend_V_Num,  
+			pretend_I_Num
 		];
 
 
@@ -343,7 +370,7 @@
 				 
 				  if(event.target.classList.contains('numeral')) {
 
-				    allFunctions[parseInt(event.target.dataset.index)](event.target.value);
+				    allInputFunctions[parseInt(event.target.dataset.index)](event.target.value);
 				    runRuleOfThrees(event.target.value, event.target.dataset.index, inputRoman.textContent);
   	
 				  	inputRoman.textContent += event.target.value;
@@ -356,12 +383,9 @@
 				  		console.log(pseudoLatestNumeral);
 				  		var indexFromPseudo = getIndexFromNumeral(pseudoLatestNumeral) || 0;
 				  		console.log(indexFromPseudo);
-						if((inputRoman.textContent.match(/MMM/g) || []).length === 0) allNumerals[indexFromPseudo].disabled = false;
-
-
-
-				  		// allFunctions[parseInt(indexFromPseudo)](pseudoLatestNumeral);
-				    	//runRuleOfThrees(pseudoLatestNumeral, indexFromPseudo, inputRoman.textContent); 	   	  	 
+						
+				  		allDeletionFunctions[parseInt(indexFromPseudo)](pseudoLatestNumeral);
+				    	runRuleOfThrees(pseudoLatestNumeral, indexFromPseudo, inputRoman.textContent); 	   	  	 
 				  }
 	 		    }, 
 	 		false);
