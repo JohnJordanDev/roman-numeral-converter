@@ -264,7 +264,7 @@
 					return i;
 				}
 			}
-			return false;
+			return 7;
 		};
 
 
@@ -288,9 +288,10 @@
 		};
 
 		var process_C_Num = function(latestNumeral){
+			setBtnDisabledProp(0, 1, true);
 			if( (inputRoman.textContent.match(/CM/g) || []).length +
 			    (inputRoman.textContent.match(/D/g) || []).length === 0){
-				allNumerals[0].disabled = false;
+				setBtnDisabledProp(0, 1, false);
 			}
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XC'){
 				return setBtnDisabledProp(0,3,true);
@@ -338,15 +339,17 @@
 		];
 
 		var pretend_M_Num = function(romanInput){
-			if( (romanInput.match(/MMM/g) || []).length === 0) {
-				allNumerals[0].disabled = false;	
-			} 
-			if( (romanInput.match(/D/g) || []).length === 0){
-				allNumerals[1].disabled = false;
-			}
-			if((romanInput.match(/CM/g) || []).length === 0) {
-				allNumerals[1].disabled = false;
-			}			
+			setBtnDisabledProp(3,6,false);
+			if( (romanInput.match(/MMM/g) || []).length +
+				(romanInput.match(/CM/g) || []).length === 0) {
+				  allNumerals[0].disabled = false;
+			}	
+			if(
+				(romanInput.match(/D/g) || []).length +
+				(romanInput.match(/CM/g) || []).length +
+				(romanInput.match(/CC/g) || []).length === 0) {
+					allNumerals[1].disabled = false;
+			}		
 		};
 
 		var pretend_D_Num = function(romanInput){
@@ -416,7 +419,7 @@
 				  		console.log('current input is:', inputRoman.textContent);
 				  		var lastRomanNumeral = inputRoman.textContent.slice(-1) || '';
 				  		console.log(lastRomanNumeral);
-				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral) || 7;
+				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral);
 				  		console.log(indexLastRomanNumeral);
 						
 				  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](inputRoman.textContent);
