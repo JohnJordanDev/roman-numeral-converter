@@ -294,38 +294,47 @@
 				setBtnDisabledProp(0, 1, false);
 			}
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XC'){
-				return setBtnDisabledProp(0,3,true);
+				setBtnDisabledProp(0,4,true);
 			}
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CC') {
 				setBtnDisabledProp(0, 1, true);
 			}		
 		};
 
-		var process_L_Num = function(){
+		var process_L_Num = function(latestNumeral){
 			setBtnDisabledProp(0,3,true);
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XL') {
+				allNumerals[4].disabled = true;
+			}	
 		};
 
-		var process_X_Num = function(){
-			setBtnDisabledProp(0,2,true);
+		var process_X_Num = function(latestNumeral){
+			setBtnDisabledProp(0,3,true);
 			if( (inputRoman.textContent.match(/XC/g) || []).length +
 				(inputRoman.textContent.match(/L/g) || []).length === 0){
-				allNumerals[2].disabled = false;
+				  setBtnDisabledProp(2,3,false);
 			}
-
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XX') {
+				setBtnDisabledProp(2, 3, true);
+			}	
 			if(inputRoman.textContent.slice(-1) === 'I' ){
-				return setBtnDisabledProp(0,6,true);
+				setBtnDisabledProp(0,6,true);
 			}
 		};
 
 		var process_V_Num = function(){
+			setBtnDisabledProp(0,5,true);
 			if(inputRoman.textContent.slice(-1) === 'I' ){
-				return setBtnDisabledProp(0,6,true);
+				setBtnDisabledProp(0,6,true);
 			}
-			return setBtnDisabledProp(0,5,true);
 		};
 
 		var process_I_Num = function(latestNumeral){
 			setBtnDisabledProp(0, 3, true);
+			if( (inputRoman.textContent.match(/V/g) || []).length +
+			    (inputRoman.textContent.match(/XI/g) || []).length === 0){
+				setBtnDisabledProp(4, 5, false);
+			}
 		};
 
 		var allInputFunctions = [
@@ -381,7 +390,16 @@
 			}
 		};
 
-		var pretend_X_Num =  function(romanInput){};
+		var pretend_X_Num =  function(romanInput){
+			if((romanInput.match(/XXX/g) || []).length === 0) {	
+				allNumerals[4].disabled = false;	
+			} 
+			if( (romanInput.match(/XX/g) || []).length +
+				(romanInput.match(/XL/g) || []).length +
+				(romanInput.match(/XC/g) || []).length === 0 ){
+				setBtnDisabledProp(2,3,false);
+			}
+		};
 		var pretend_V_Num =  function(romanInput){};
 		var pretend_I_Num =  function(romanInput){};
 
