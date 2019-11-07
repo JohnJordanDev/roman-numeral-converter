@@ -276,19 +276,20 @@
 		/* Individual Numeral Processing */
 		var process_M_Num = function(latestNumeral){
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
-				return setBtnDisabledProp(0,2,true);
+				setBtnDisabledProp(0,2,true);
 			}
 		};
 
 		var process_D_Num = function(latestNumeral){
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CD'){
-				return setBtnDisabledProp(0,2,true);
-			}
 			setBtnDisabledProp(0, 1, true);
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CD'){
+				setBtnDisabledProp(0,2,true);
+			}
 		};
 
 		var process_C_Num = function(latestNumeral){
-			if( (inputRoman.textContent.match(/CM/g) || inputRoman.textContent.match(/D/g) || []).length === 0){
+			if( (inputRoman.textContent.match(/CM/g) || []).length +
+			    (inputRoman.textContent.match(/D/g) || []).length === 0){
 				allNumerals[0].disabled = false;
 			}
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XC'){
@@ -304,6 +305,7 @@
 		};
 
 		var process_X_Num = function(){
+			setBtnDisabledProp(0,2,true);
 			if( (inputRoman.textContent.match(/XC/g) || []).length === 0){
 				allNumerals[2].disabled = false;
 			}
@@ -349,10 +351,14 @@
 		};
 
 		var pretend_C_Num = function(romanInput){
-			if((romanInput.match(/D/g) || romanInput.match(/M/g) || []).length === 0){
-				return setBtnDisabledProp(0,2,false);
+			if((romanInput.match(/CCC/g) || []).length === 0) {	
+				allNumerals[2].disabled = false;	
 			} 
-			allNumerals[2].disabled = false;
+			if( (romanInput.match(/CC/g) || []).length +
+				(romanInput.match(/CD/g) || []).length +
+				(romanInput.match(/CM/g) || []).length === 0 ){
+				setBtnDisabledProp(0,1,false);
+			}
 		};
 		var pretend_L_Num =  function(romanInput){};
 		var pretend_X_Num =  function(romanInput){};
