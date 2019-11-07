@@ -306,9 +306,11 @@
 
 		var process_X_Num = function(){
 			setBtnDisabledProp(0,2,true);
-			if( (inputRoman.textContent.match(/XC/g) || []).length === 0){
+			if( (inputRoman.textContent.match(/XC/g) || []).length +
+				(inputRoman.textContent.match(/L/g) || []).length === 0){
 				allNumerals[2].disabled = false;
 			}
+
 			if(inputRoman.textContent.slice(-1) === 'I' ){
 				return setBtnDisabledProp(0,6,true);
 			}
@@ -336,34 +338,53 @@
 		];
 
 		var pretend_M_Num = function(romanInput){
-			if( (romanInput.match(/MMM/g) || []).length + (romanInput.match(/CM/g) || []).length === 0) {
+			if( (romanInput.match(/MMM/g) || []).length === 0) {
 				allNumerals[0].disabled = false;	
 			} 
-			if( (romanInput.match(/D/g) || []).length == 0){
+			if( (romanInput.match(/D/g) || []).length === 0){
 				allNumerals[1].disabled = false;
 			}
+			if((romanInput.match(/CM/g) || []).length === 0) {
+				allNumerals[1].disabled = false;
+			}			
 		};
 
 		var pretend_D_Num = function(romanInput){
-			if( (romanInput.match(/C/g) || []).length == 0){
+			setBtnDisabledProp(3,6,false);
+			if( (romanInput.match(/C/g) || []).length === 0){
 				allNumerals[2].disabled = false;
 			}
 		};
 
 		var pretend_C_Num = function(romanInput){
+			setBtnDisabledProp(3,6,false);
 			if((romanInput.match(/CCC/g) || []).length === 0) {	
 				allNumerals[2].disabled = false;	
 			} 
 			if( (romanInput.match(/CC/g) || []).length +
 				(romanInput.match(/CD/g) || []).length +
+				(romanInput.match(/DC/g) || []).length +
 				(romanInput.match(/CM/g) || []).length === 0 ){
 				setBtnDisabledProp(0,1,false);
 			}
+			if((romanInput.match(/XC/g) || []).length !== 0) {	
+				allNumerals[4].disabled = true;
+			} 
 		};
-		var pretend_L_Num =  function(romanInput){};
+
+		var pretend_L_Num =  function(romanInput){
+			if( (romanInput.match(/C/g) || []).length === 0){
+				allNumerals[2].disabled = false;
+			}
+		};
+
 		var pretend_X_Num =  function(romanInput){};
 		var pretend_V_Num =  function(romanInput){};
 		var pretend_I_Num =  function(romanInput){};
+
+		var allowAllNumerals =function(romanInput){
+			setBtnDisabledProp(0,6,false);
+		};
 
 		var allDeletionFunctions = [
 			pretend_M_Num, 
@@ -372,7 +393,8 @@
 			pretend_L_Num,  
 			pretend_X_Num,  
 			pretend_V_Num,  
-			pretend_I_Num
+			pretend_I_Num,
+			allowAllNumerals
 		];
 
 
@@ -392,9 +414,9 @@
 				  } else if(event.target.classList.contains('delete')) {
 				  		inputRoman.textContent = inputRoman.textContent.slice(0,-1);
 				  		console.log('current input is:', inputRoman.textContent);
-				  		var lastRomanNumeral = inputRoman.textContent.slice(-1) || 'M';
+				  		var lastRomanNumeral = inputRoman.textContent.slice(-1) || '';
 				  		console.log(lastRomanNumeral);
-				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral) || 0;
+				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral) || 7;
 				  		console.log(indexLastRomanNumeral);
 						
 				  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](inputRoman.textContent);
