@@ -330,10 +330,13 @@
 		};
 
 		var process_I_Num = function(latestNumeral){
-			setBtnDisabledProp(0, 3, true);
+			setBtnDisabledProp(0, 5, true);
 			if( (inputRoman.textContent.match(/V/g) || []).length +
-			    (inputRoman.textContent.match(/XI/g) || []).length === 0){
-				setBtnDisabledProp(4, 5, false);
+			    (inputRoman.textContent.match(/IX/g) || []).length === 0){
+				setBtnDisabledProp(4, 6, false);
+			}
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'II') {
+				setBtnDisabledProp(4, 5, true);
 			}
 		};
 
@@ -362,46 +365,64 @@
 		};
 
 		var pretend_D_Num = function(romanInput){
-			setBtnDisabledProp(3,6,false);
 			if( (romanInput.match(/C/g) || []).length === 0){
 				allNumerals[2].disabled = false;
 			}
 		};
 
 		var pretend_C_Num = function(romanInput){
-			setBtnDisabledProp(3,6,false);
+			setBtnDisabledProp(0,1,true);
 			if((romanInput.match(/CCC/g) || []).length === 0) {	
 				allNumerals[2].disabled = false;	
 			} 
 			if( (romanInput.match(/CC/g) || []).length +
-				(romanInput.match(/CD/g) || []).length +
-				(romanInput.match(/DC/g) || []).length +
+				(romanInput.match(/D/g) || []).length +
 				(romanInput.match(/CM/g) || []).length === 0 ){
 				setBtnDisabledProp(0,1,false);
 			}
-			if((romanInput.match(/XC/g) || []).length !== 0) {	
-				allNumerals[4].disabled = true;
+			if((romanInput.match(/L/g) || []).length === 0) {	
+				allNumerals[3].disabled = false;
 			} 
 		};
 
 		var pretend_L_Num =  function(romanInput){
 			if( (romanInput.match(/C/g) || []).length === 0){
-				allNumerals[2].disabled = false;
+				allNumerals[4].disabled = false;
 			}
 		};
 
 		var pretend_X_Num =  function(romanInput){
+			setBtnDisabledProp(0,4,true);
 			if((romanInput.match(/XXX/g) || []).length === 0) {	
 				allNumerals[4].disabled = false;	
 			} 
 			if( (romanInput.match(/XX/g) || []).length +
-				(romanInput.match(/XL/g) || []).length +
+				(romanInput.match(/L/g) || []).length +
 				(romanInput.match(/XC/g) || []).length === 0 ){
-				setBtnDisabledProp(2,3,false);
+				  setBtnDisabledProp(2,3,false);
+			}
+			if((romanInput.match(/XV/g) || []).length === 0) {	
+				allNumerals[5].disabled = false;
+			} 
+		};
+		var pretend_V_Num =  function(romanInput){
+			if( (romanInput.match(/X/g) || []).length === 0){
+				allNumerals[5].disabled = false;
 			}
 		};
-		var pretend_V_Num =  function(romanInput){};
-		var pretend_I_Num =  function(romanInput){};
+		var pretend_I_Num =  function(romanInput){
+			setBtnDisabledProp(0,5,true);
+			if((romanInput.match(/III/g) || []).length === 0) {	
+				allNumerals[6].disabled = false;	
+			} 
+			if( (romanInput.match(/II/g) || []).length +
+				(romanInput.match(/V/g) || []).length +
+				(romanInput.match(/IX/g) || []).length +
+				(romanInput.match(/XV/g) || []).length === 0 ){
+				 setBtnDisabledProp(4,5,false);
+			}
+
+		};
 
 		var allowAllNumerals =function(romanInput){
 			setBtnDisabledProp(0,6,false);
