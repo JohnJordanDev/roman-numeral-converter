@@ -360,7 +360,7 @@
 				(romanInput.match(/D/g) || []).length +
 				(romanInput.match(/CM/g) || []).length +
 				(romanInput.match(/CC/g) || []).length === 0) {
-					allNumerals[1].disabled = false;
+					setBtnDisabledProp(0,2,false);
 			}		
 		};
 
@@ -455,14 +455,9 @@
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
 				  		inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-				  		console.log('current input is:', inputRoman.textContent);
 				  		var lastRomanNumeral = inputRoman.textContent.slice(-1) || '';
-				  		console.log(lastRomanNumeral);
 				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral);
-				  		console.log(indexLastRomanNumeral);
-						
 				  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](inputRoman.textContent);
-				    	// runRuleOfThrees(romanInput, indexFromPseudo, inputRoman.textContent); 	   	  	 
 				  }
 				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));	
 	 		    }, 
