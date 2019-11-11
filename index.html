@@ -442,6 +442,7 @@
 
 		var pretend_C_Num = function(romanInput){
 			setBtnDisabledProp(0,1,true);
+			console.log('called!', romanInput, (romanInput.match(/XC/g) || []).length);
 			if((romanInput.match(/CCC/g) || []).length === 0) {	
 				allNumerals[2].disabled = false;	
 			} 
@@ -453,6 +454,10 @@
 			if((romanInput.match(/L/g) || []).length === 0) {	
 				allNumerals[3].disabled = false;
 			} 
+			if( (romanInput.match(/XC/g) || []).length === 1) {
+				console.log('"XC" is present');
+				setBtnDisabledProp(0,4,true);
+			}
 		};
 
 		var pretend_L_Num =  function(romanInput){
@@ -525,6 +530,7 @@
 				  } else if(event.target.classList.contains('delete')) {
 				  		inputRoman.textContent = inputRoman.textContent.slice(0,-1);
 				  		var lastRomanNumeral = inputRoman.textContent.slice(-1) || '';
+				  		console.log('number entered into system is: ', lastRomanNumeral);
 				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral);
 				  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](inputRoman.textContent);
 				  }
