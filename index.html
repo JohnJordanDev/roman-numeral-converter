@@ -9,12 +9,13 @@
 		/* Typography */
 
 		header, section, button, output {
-			font-size: 3rem;
+			font-size: 2rem;
 			line-height: 2;
 		}
 
 		.placeholder {
-			font-size: 1.5rem;
+			font-size: 1.25rem;
+			line-height: 1;
 		}
 
 		/* Layout */
@@ -45,15 +46,16 @@
 		}
 
 		h1 {
-			font-size: 3rem;
+			font-size: 2rem;
+			line-height: 1;
 		}
 
-		header {
-			margin-bottom: 6rem;
+		section {
+			height: 6.25rem;
 		}
 
 		output {
-			min-height: 6rem;
+			height: 6rem;
 		}
 
 		section > .row {
@@ -62,6 +64,7 @@
 
 		.numeral, .delete, .spacer {
 			width: 6rem;
+			max-width: 30%;
 		}
 
 		.numeral[disabled]{
@@ -86,13 +89,24 @@
 
 		.sidebar-banner .icon-wrapper {
 			text-align: center;
-			vertical-align: middle;
-			display: table-cell;
-			font-size: 6rem;
+			font-size: 4rem;
 		}
 
 		.sidebar-banner .icon-wrapper > div {
 			padding: 1rem 0;
+		}
+
+		.d-table {
+			display: table;
+			width: 100%
+		}
+
+		.d-cell {
+			display: table-cell;
+		}
+		
+		.v-middle {
+			vertical-align: middle;
 		}
 
 		.--left {
@@ -104,10 +118,8 @@
 		}
 
 		output {
-			display: block;
 			text-align: center;
 		}
-
 
 		footer {
 			background-color: green;
@@ -116,7 +128,12 @@
 			width: 100%
 		}
 
-		@media only screen and (min-width: 968px){
+
+		@media only screen and (min-width: 968px) {
+
+			header, h1, section, button, output {
+				font-size: 3rem;
+			}
 
 			.sidebar-banner {
 			  display: table;
@@ -137,7 +154,7 @@
 	<nav></nav>
 	
 	<div class="sidebar-banner --left">
-		<div class="icon-wrapper">
+		<div class="icon-wrapper d-cell v-middle">
 			<div>I</div>
 			<div>II</div>
 			<div>III</div>
@@ -149,11 +166,13 @@
 	 	<header>
 			<h1>Roman Numeral Converter</h1>
 	  	</header>
-	  	<section>
-	  		<output id="result_indo" name="result" for="input_roman">
-	  			<span class="placeholder">Converted number will appear here</span>
+	  	<section class="d-table">
+	  		<output class="d-cell v-middle" id="result_indo" name="result" for="input_roman">
+	  			<span class="placeholder d-table">Converted number will appear here</span>
 	  		</output>
-	  		<output id="input_roman" name="input"></output>
+	  	</section>
+	  	<section  class="d-table">
+	  		<output class="d-cell v-middle" id="input_roman" name="input"></output>
 	  	</section>
 	  	<section id="numeral_input_pad">
 	  		<div class="row">
@@ -173,7 +192,7 @@
 	  		</div>
 	  	</section>
 	</main><div class="sidebar-banner --right">
-		<div class="icon-wrapper">
+		<div class="icon-wrapper d-cell v-middle">
 			<div>1</div>
 			<div>2</div>
 			<div>3</div>
@@ -213,7 +232,7 @@
 
 		var getValueOfRomanNumeral= function(romanNumeral){
 
-				return dictRomanToDecimal[romanNumeral] || 0;
+			return dictRomanToDecimal[romanNumeral] || 0;
 		};
 
 
