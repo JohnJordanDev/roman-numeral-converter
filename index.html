@@ -7,8 +7,11 @@
 	<style>
 
 		/* Typography */
+		* {
+			box-sizing: border-box;
+		}
 
-		header, section, button, output {
+		header, section, button {
 			font-size: 2rem;
 			line-height: 2;
 		}
@@ -18,28 +21,43 @@
 			line-height: 1;
 		}
 
-		/* Layout */
+		.output-wrapper.--indo {
+			font-size: 5rem;
+			height: 10rem;
+		} 
 
-		* {
-			box-sizing: border-box;
+		.input-roman {
+			height: 2rem;
+			word-wrap: break-word;
+			word-break: break-all;
+			line-height: 1;
+			border: 1px solid #000000;
+			border-left: none;
+			border-right: none;
 
 		}
 
-		html {
-			height: 100%;
+		/* Layout */
+
+		html{
+			height:100%;
+			} 
+
+		body {
+			height:auto;
+			min-height: 100%;
 		}
 
 		body {
 			margin: 0;
-			min-height: 100%;
-			height: auto;
 			text-align: center;
 			position: relative;
 		}
 
-		body * {
-			border: solid 1px black;
+		nav {
+			padding: 1rem 0;
 		}
+
 
 		h1,h2,p {
 			margin: 0;
@@ -51,7 +69,7 @@
 		}
 
 		section {
-			height: 6.25rem;
+			height: 100%;
 		}
 
 		output {
@@ -63,7 +81,8 @@
 		}
 
 		.numeral, .delete, .spacer {
-			width: 6rem;
+			width: 5rem;
+			font-size: 2.5rem;
 			max-width: 30%;
 		}
 
@@ -90,6 +109,7 @@
 		.sidebar-banner .icon-wrapper {
 			text-align: center;
 			font-size: 4rem;
+			opacity: 0.1;
 		}
 
 		.sidebar-banner .icon-wrapper > div {
@@ -117,6 +137,14 @@
 			right: 0;
 		}
 
+		.output-wrapper {
+			height: 4rem;
+		} 
+
+		.numeral-wrapper {
+			padding: 1rem 0;
+		}
+
 		output {
 			text-align: center;
 		}
@@ -128,11 +156,20 @@
 			width: 100%
 		}
 
+		/* Styling */
+		nav {
+			box-shadow: 0 2px 4px rgba(0,0,0,.5);
+		}
+
 
 		@media only screen and (min-width: 968px) {
 
-			header, h1, section, button, output {
+			header, h1, section, button {
 				font-size: 3rem;
+			}
+
+			.input-roman {
+				font-size: 2rem;
 			}
 
 			.sidebar-banner {
@@ -151,7 +188,11 @@
 	</style>
 </head>
 <body>
-	<nav></nav>
+	<nav>
+		<header>
+			<h1>Roman Numeral Converter</h1>
+	  	</header>
+	</nav>
 	
 	<div class="sidebar-banner --left">
 		<div class="icon-wrapper d-cell v-middle">
@@ -160,21 +201,18 @@
 			<div>III</div>
 			<div>IV</div>
 			<div>V</div>
-		</div>
-		
-	</div><main id="main_content">
-	 	<header>
-			<h1>Roman Numeral Converter</h1>
-	  	</header>
-	  	<section class="d-table">
+		</div>	
+	</div>
+	<main id="main_content">
+	  	<section class="output-wrapper --indo d-table">
 	  		<output class="d-cell v-middle" id="result_indo" name="result" for="input_roman">
 	  			<span class="placeholder d-table">Converted number will appear here</span>
 	  		</output>
 	  	</section>
-	  	<section  class="d-table">
-	  		<output class="d-cell v-middle" id="input_roman" name="input"></output>
+	  	<section class="output-wrapper d-table">
+	  		<output class="input-roman d-cell v-middle" id="input_roman" name="input"></output>
 	  	</section>
-	  	<section id="numeral_input_pad">
+	  	<section id="numeral_input_pad" class="numeral-wrapper">
 	  		<div class="row">
 	  			<button class="numeral" data-index="0" data-ctx="3" value="M">M</button>
 	  			<button class="numeral" data-index="1" data-ctx="2" value="D">D</button>
