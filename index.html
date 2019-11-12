@@ -239,7 +239,7 @@
 	  		<div class="row">
 	  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
 	  			<button class="numeral" data-index="6" data-ctx="0" value="I">I</button>
-	  			<button class="delete"><</button>
+	  			<button class="delete" disabled="disabled"><</button>
 	  		</div>
 	  	</section>
 	</main><div class="sidebar-banner --right">
@@ -298,13 +298,13 @@
           return false;
 		};
 
-		var parseRomanInput = function(inputString){
+		var parseromanInput = function(inputString){
 
 			if(inputString.length < 1) return false;
 
-			if(isDupleRomanNmeral(inputString.substring(0,2)) ) return [inputString.substring(0,2)].concat(parseRomanInput(inputString.substring(2)));
+			if(isDupleRomanNmeral(inputString.substring(0,2)) ) return [inputString.substring(0,2)].concat(parseromanInput(inputString.substring(2)));
 
-			return [inputString.substring(0,1)].concat(parseRomanInput(inputString.substring(1)));
+			return [inputString.substring(0,1)].concat(parseromanInput(inputString.substring(1)));
 
 		};
 
@@ -312,6 +312,7 @@
 
 
 		var allNumerals = document.querySelectorAll('#numeral_input_pad > .row > .numeral');
+		var delBtn = document.querySelector('button.delete');
 		console.log(allNumerals);
 
 
@@ -325,7 +326,7 @@
 			var triple = numeralValue + numeralValue + numeralValue;
 			if(currentInput.slice(-2) + numeralValue === triple){
 				return allNumerals[numeralIndex].disabled = true;
-			}			
+			}	
 		};
 
 		var getIndexFromNumeral = function(numeral){
@@ -334,7 +335,7 @@
 					return i;
 				}
 			}
-			return 7;
+			return 0;
 		};
 
 
@@ -420,99 +421,98 @@
 			process_I_Num
 		];
 
-		var pretend_M_Num = function(romanInput){
-			setBtnDisabledProp(3,6,false);
-			if( (romanInput.match(/MMM/g) || []).length +
-				(romanInput.match(/CM/g) || []).length === 0) {
-				  allNumerals[0].disabled = false;
-			}	
-			if(
-				(romanInput.match(/D/g) || []).length +
-				(romanInput.match(/CM/g) || []).length +
-				(romanInput.match(/CC/g) || []).length === 0) {
-					setBtnDisabledProp(0,2,false);
-			}		
-		};
-
-		var pretend_D_Num = function(romanInput){
-			if( (romanInput.match(/C/g) || []).length === 0){
-				allNumerals[2].disabled = false;
+		var delete_M_Num = function(romanInput){
+			setBtnDisabledProp(0,6,false);
+			if( romanInput.indexOf('MMM') >= 0 ) {
+				allNumerals[0].disabled = true;
+			}
+			if(romanInput.slice(-1) === 'C') {
+				allNumerals[1].disabled = false;
 			}
 		};
 
-		var pretend_C_Num = function(romanInput){
-			setBtnDisabledProp(0,1,true);
-			console.log('called!', romanInput, (romanInput.match(/XC/g) || []).length);
-			if((romanInput.match(/CCC/g) || []).length === 0) {	
-				allNumerals[2].disabled = false;	
-			} 
-			if( (romanInput.match(/CC/g) || []).length +
-				(romanInput.match(/D/g) || []).length +
-				(romanInput.match(/CM/g) || []).length === 0 ){
-				setBtnDisabledProp(0,1,false);
-			}
-			if((romanInput.match(/L/g) || []).length === 0) {	
-				allNumerals[3].disabled = false;
-			} 
-			if( (romanInput.match(/XC/g) || []).length === 1) {
-				console.log('"XC" is present');
-				setBtnDisabledProp(0,4,true);
+		var delete_D_Num = function(romanInput){
+			setBtnDisabledProp(1,6,false);
+			if( romanInput.indexOf('MMM') >= 0 ) {
+				allNumerals[0].disabled = false;
 			}
 		};
 
-		var pretend_L_Num =  function(romanInput){
-			if( (romanInput.match(/C/g) || []).length === 0){
-				allNumerals[4].disabled = false;
-			}
-		};
-
-		var pretend_X_Num =  function(romanInput){
-			setBtnDisabledProp(0,4,true);
-			if((romanInput.match(/XXX/g) || []).length === 0) {	
-				allNumerals[4].disabled = false;	
-			} 
-			if( (romanInput.match(/XX/g) || []).length +
-				(romanInput.match(/L/g) || []).length +
-				(romanInput.match(/XC/g) || []).length === 0 ){
-				  setBtnDisabledProp(2,3,false);
-			}
-			if((romanInput.match(/XV/g) || []).length === 0) {	
-				allNumerals[5].disabled = false;
+		var delete_C_Num = function(romanInput){
+			setBtnDisabledProp(2,6,false);
+			if( romanInput.indexOf('CCC') >= 0 ) {	
+				allNumerals[2].disabled = true;	
 			} 
 		};
-		var pretend_V_Num =  function(romanInput){
-			if( (romanInput.match(/X/g) || []).length === 0){
-				allNumerals[5].disabled = false;
-			}
+
+		var delete_L_Num =  function(romanInput){
+			// setBtnDisabledProp(3,6,false);
+			// if( romanInput.indexOf('MMM') < 0 ) {
+			// 	allNumerals[0].disabled = false;
+			// }
+			// if( romanInput.indexOf('CD') < 0 
+			// 	&& romanInput.indexOf('D') < 0 
+			// 	&& romanInput.indexOf('CM') < 0 ) {
+			// 	allNumerals[1].disabled = false;
+			// }
+			// if( romanInput.indexOf('CCC') < 0 
+			// 	&& romanInput.indexOf('CM') < 0 ) {
+			// 	allNumerals[2].disabled = false;
+			// }
 		};
-		var pretend_I_Num =  function(romanInput){
-			setBtnDisabledProp(0,5,true);
-			if((romanInput.match(/III/g) || []).length === 0) {	
-				allNumerals[6].disabled = false;	
-			} 
-			if( (romanInput.match(/II/g) || []).length +
-				(romanInput.match(/V/g) || []).length +
-				(romanInput.match(/IX/g) || []).length +
-				(romanInput.match(/XV/g) || []).length === 0 ){
-				 setBtnDisabledProp(4,5,false);
-			}
+
+		var delete_X_Num =  function(romanInput){
+			// setBtnDisabledProp(0,4,true);
+			// if((romanInput.match(/XXX/g) || []).length === 0) {	
+			// 	allNumerals[4].disabled = false;	
+			// } 
+			// if( (romanInput.match(/XX/g) || []).length +
+			// 	(romanInput.match(/L/g) || []).length +
+			// 	(romanInput.match(/XC/g) || []).length === 0 ){
+			// 	  setBtnDisabledProp(2,3,false);
+			// }
+			// if((romanInput.match(/XV/g) || []).length === 0) {	
+			// 	allNumerals[5].disabled = false;
+			// } 
+		};
+		var delete_V_Num =  function(romanInput){
+			// if( (romanInput.match(/X/g) || []).length === 0){
+			// 	allNumerals[5].disabled = false;
+			// }
+		};
+		var delete_I_Num =  function(romanInput){
+			// setBtnDisabledProp(0,5,true);
+			// if((romanInput.match(/III/g) || []).length === 0) {	
+			// 	allNumerals[6].disabled = false;	
+			// } 
+			// if( (romanInput.match(/II/g) || []).length +
+			// 	(romanInput.match(/V/g) || []).length +
+			// 	(romanInput.match(/IX/g) || []).length +
+			// 	(romanInput.match(/XV/g) || []).length === 0 ){
+			// 	 setBtnDisabledProp(4,5,false);
+			// }
 
 		};
 
-		var allowAllNumerals =function(romanInput){
+		var allowAllNumerals = function(){
 			setBtnDisabledProp(0,6,false);
 		};
 
 		var allDeletionFunctions = [
-			pretend_M_Num, 
-			pretend_D_Num, 
-			pretend_C_Num,  
-			pretend_L_Num,  
-			pretend_X_Num,  
-			pretend_V_Num,  
-			pretend_I_Num,
-			allowAllNumerals
+			delete_M_Num, 
+			delete_D_Num, 
+			delete_C_Num,  
+			delete_L_Num,  
+			delete_X_Num,  
+			delete_V_Num,  
+			delete_I_Num
 		];
+
+		var processDeletion = function(deletedNumeral, romanInput){
+			/* index needed to call appropriate deletion processing function */
+	  		var indexLastRomanNumeral = getIndexFromNumeral(deletedNumeral);
+	  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](romanInput);
+		};
 
 		document
 			.getElementById('numeral_input_pad')
@@ -523,18 +523,24 @@
 
 				    allInputFunctions[parseInt(event.target.dataset.index)](event.target.value);
 				    runRuleOfThrees(event.target.value, event.target.dataset.index, inputRoman.textContent);
-  	
 				  	inputRoman.textContent += event.target.value;
-				   	 
+				  	delBtn.disabled = false;
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
-				  		inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-				  		var lastRomanNumeral = inputRoman.textContent.slice(-1) || '';
-				  		console.log('number entered into system is: ', lastRomanNumeral);
-				  		var indexLastRomanNumeral = getIndexFromNumeral(lastRomanNumeral);
-				  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](inputRoman.textContent);
+
+				  		var deletedRomanNumeral = inputRoman.textContent.slice(-1) || '';
+	  					inputRoman.textContent = inputRoman.textContent.slice(0,-1);
+				  		processDeletion(deletedRomanNumeral, inputRoman.textContent);
+
+				  		if(!inputRoman.textContent.length) {
+				  			allowAllNumerals();
+				  			delBtn.disabled = true;
+				  		}
+
 				  }
-				  resultIndo.textContent = countRomanNumerals(parseRomanInput(inputRoman.textContent));	
+
+				  resultIndo.textContent = countRomanNumerals(parseromanInput(inputRoman.textContent));	
+
 	 		    }, 
 	 		false);
 
