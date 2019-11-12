@@ -293,7 +293,7 @@
 
           for(var i = 0; i < 6; i++){
 
-            if(duples[i] === inputSubString) return true;  
+            if(duples[i].disabled === inputSubString) return true;  
           }
           return false;
 		};
@@ -344,7 +344,7 @@
 		var resultIndo = document.getElementById('result_indo');
 		
 
-		/* Individual Numeral Processing */
+		/* Addition Processing */
 		var process_M_Num = function(latestNumeral){
 			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
 				setBtnDisabledProp(0,2,true);
@@ -421,6 +421,8 @@
 			process_I_Num
 		];
 
+		/* Deletion Functions */
+
 		var delete_M_Num = function(romanInput){
 			setBtnDisabledProp(0,6,false);
 			if( romanInput.indexOf('MMM') >= 0 ) {
@@ -432,20 +434,34 @@
 		};
 
 		var delete_D_Num = function(romanInput){
-			setBtnDisabledProp(1,6,false);
+			setBtnDisabledProp(0,6,false);
 			if( romanInput.indexOf('MMM') >= 0 ) {
-				allNumerals[0].disabled = false;
+				allNumerals[0].disabled = true;
 			}
 		};
 
 		var delete_C_Num = function(romanInput){
-			setBtnDisabledProp(2,6,false);
-			if( romanInput.indexOf('CCC') >= 0 ) {	
-				allNumerals[2].disabled = true;	
-			} 
+			// setBtnDisabledProp(2,6,false);
+			// if( romanInput.indexOf('CCC') >= 0 ) {	
+			// 	allNumerals[2].disabled = true;	
+			// } 
 		};
 
 		var delete_L_Num =  function(romanInput){
+			setBtnDisabledProp(0,6,false);
+			if( romanInput.indexOf('CM') >= 0 ||
+				romanInput.indexOf('MMM') >= 0 ) {
+				allNumerals[0].disabled = true;
+			}
+			if( romanInput.indexOf('CD') >= 0 ||
+				romanInput.indexOf('D') >= 0 ||
+				romanInput.indexOf('CM') >= 0 ) {
+				setBtnDisabledProp(0,1,true);
+			}
+			if( romanInput.indexOf('CCC') >= 0 ) {
+				allNumerals[2].disabled = true;
+			}
+			
 			// setBtnDisabledProp(3,6,false);
 			// if( romanInput.indexOf('MMM') < 0 ) {
 			// 	allNumerals[0].disabled = false;
