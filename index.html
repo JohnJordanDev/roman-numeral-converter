@@ -293,16 +293,24 @@
 
           for(var i = 0; i < 6; i++){
 
-            if(duples[i].disabled === inputSubString) return true;  
+            if(duples[i] === inputSubString) {
+            	return true;
+            }  
           }
           return false;
 		};
 
 		var parseromanInput = function(inputString){
 
-			if(inputString.length < 1) return false;
 
-			if(isDupleRomanNmeral(inputString.substring(0,2)) ) return [inputString.substring(0,2)].concat(parseromanInput(inputString.substring(2)));
+			if(inputString.length < 1) {
+				return false;
+			}
+
+			if( isDupleRomanNmeral(inputString.substring(0,2)) ){ 
+				console.log('a duple');
+				return [inputString.substring(0,2)].concat(parseromanInput(inputString.substring(2)));
+			}
 
 			return [inputString.substring(0,1)].concat(parseromanInput(inputString.substring(1)));
 
@@ -394,21 +402,21 @@
 		};
 
 		var process_V_Num = function(){
-			setBtnDisabledProp(0,5,true);
-			if(inputRoman.textContent.slice(-1) === 'I' ){
-				setBtnDisabledProp(0,6,true);
-			}
+			// setBtnDisabledProp(0,5,true);
+			// if(inputRoman.textContent.slice(-1) === 'I' ){
+			// 	setBtnDisabledProp(0,6,true);
+			// }
 		};
 
 		var process_I_Num = function(latestNumeral){
-			setBtnDisabledProp(0, 5, true);
-			if( (inputRoman.textContent.match(/V/g) || []).length +
-			    (inputRoman.textContent.match(/IX/g) || []).length === 0){
-				setBtnDisabledProp(4, 6, false);
-			}
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'II') {
-				setBtnDisabledProp(4, 5, true);
-			}
+			// setBtnDisabledProp(0, 5, true);
+			// if( (inputRoman.textContent.match(/V/g) || []).length +
+			//     (inputRoman.textContent.match(/IX/g) || []).length === 0){
+			// 	setBtnDisabledProp(4, 6, false);
+			// }
+			// if(inputRoman.textContent.slice(-1) + latestNumeral === 'II') {
+			// 	setBtnDisabledProp(4, 5, true);
+			// }
 		};
 
 		var allInputFunctions = [
@@ -425,7 +433,7 @@
 
 		var delete_M_Num = function(romanInput){
 			setBtnDisabledProp(0,6,false);
-			if( romanInput.indexOf('MMM') >= 0 ) {
+			if( romanInput.indexOf('MMM') >= 0) {
 				allNumerals[0].disabled = true;
 			}
 			if(romanInput.slice(-1) === 'C') {
@@ -435,61 +443,60 @@
 
 		var delete_D_Num = function(romanInput){
 			setBtnDisabledProp(0,6,false);
-			if( romanInput.indexOf('MMM') >= 0 ) {
+			if( romanInput.indexOf('MMM') >= 0) {
 				allNumerals[0].disabled = true;
 			}
 		};
 
 		var delete_C_Num = function(romanInput){
-			// setBtnDisabledProp(2,6,false);
-			// if( romanInput.indexOf('CCC') >= 0 ) {	
-			// 	allNumerals[2].disabled = true;	
-			// } 
+			setBtnDisabledProp(0,6,false);
+			if( romanInput.indexOf('X') >= 0) {
+				setBtnDisabledProp(0,1,true);
+			}
+			if( romanInput.indexOf('CC') >= 0 || 
+				romanInput.indexOf('CM') >= 0) {
+				allNumerals[0].disabled = true;
+			}
+			if( romanInput.indexOf('D') >= 0 || 
+				romanInput.indexOf('CC') >= 0) {
+				allNumerals[1].disabled = true;
+			}
+			if( romanInput.indexOf('CCC') >= 0) {	
+				allNumerals[2].disabled = true;	
+			} 
 		};
 
 		var delete_L_Num =  function(romanInput){
 			setBtnDisabledProp(0,6,false);
+			if( romanInput.indexOf('X') >= 0) {
+				setBtnDisabledProp(0,1,true);
+			}
 			if( romanInput.indexOf('CM') >= 0 ||
-				romanInput.indexOf('MMM') >= 0 ) {
+				romanInput.indexOf('MMM') >= 0) {
 				allNumerals[0].disabled = true;
 			}
 			if( romanInput.indexOf('CD') >= 0 ||
-				romanInput.indexOf('D') >= 0 ||
-				romanInput.indexOf('CM') >= 0 ) {
-				setBtnDisabledProp(0,1,true);
+				romanInput.indexOf('D') >= 0) {
+				allNumerals[1].disabled = true;
 			}
-			if( romanInput.indexOf('CCC') >= 0 ) {
+			if( romanInput.indexOf('CCC') >= 0) {
 				allNumerals[2].disabled = true;
 			}
-			
-			// setBtnDisabledProp(3,6,false);
-			// if( romanInput.indexOf('MMM') < 0 ) {
-			// 	allNumerals[0].disabled = false;
-			// }
-			// if( romanInput.indexOf('CD') < 0 
-			// 	&& romanInput.indexOf('D') < 0 
-			// 	&& romanInput.indexOf('CM') < 0 ) {
-			// 	allNumerals[1].disabled = false;
-			// }
-			// if( romanInput.indexOf('CCC') < 0 
-			// 	&& romanInput.indexOf('CM') < 0 ) {
-			// 	allNumerals[2].disabled = false;
-			// }
 		};
 
 		var delete_X_Num =  function(romanInput){
-			// setBtnDisabledProp(0,4,true);
-			// if((romanInput.match(/XXX/g) || []).length === 0) {	
-			// 	allNumerals[4].disabled = false;	
-			// } 
-			// if( (romanInput.match(/XX/g) || []).length +
-			// 	(romanInput.match(/L/g) || []).length +
-			// 	(romanInput.match(/XC/g) || []).length === 0 ){
-			// 	  setBtnDisabledProp(2,3,false);
-			// }
-			// if((romanInput.match(/XV/g) || []).length === 0) {	
-			// 	allNumerals[5].disabled = false;
-			// } 
+			setBtnDisabledProp(2,6,false);
+			if( romanInput.indexOf('XXX') >= 0) {	
+				allNumerals[4].disabled = true;	
+			} 
+			if( romanInput.indexOf('XX') >= 0 ||
+				romanInput.indexOf('L') >= 0  ||
+				romanInput.indexOf('XC') >= 0){
+				  setBtnDisabledProp(2,3,true);
+			}
+			if( romanInput.indexOf('XV') >= 0) {	
+				allNumerals[5].disabled = true;
+			} 
 		};
 		var delete_V_Num =  function(romanInput){
 			// if( (romanInput.match(/X/g) || []).length === 0){
@@ -504,7 +511,7 @@
 			// if( (romanInput.match(/II/g) || []).length +
 			// 	(romanInput.match(/V/g) || []).length +
 			// 	(romanInput.match(/IX/g) || []).length +
-			// 	(romanInput.match(/XV/g) || []).length === 0 ){
+			// 	(romanInput.match(/XV/g) || []).length === 0){
 			// 	 setBtnDisabledProp(4,5,false);
 			// }
 
