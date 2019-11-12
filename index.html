@@ -86,7 +86,7 @@
 			margin-bottom: 1.5rem;
 		}
 
-		.numeral[disabled]{
+		.numeral[disabled], .delete[disabled] {
  			opacity: 0.5;
 		}
 
@@ -402,21 +402,21 @@
 		};
 
 		var process_V_Num = function(){
-			// setBtnDisabledProp(0,5,true);
-			// if(inputRoman.textContent.slice(-1) === 'I' ){
-			// 	setBtnDisabledProp(0,6,true);
-			// }
+			setBtnDisabledProp(0,5,true);
+			if(inputRoman.textContent.slice(-1) === 'I' ){
+				setBtnDisabledProp(0,6,true);
+			}
 		};
 
 		var process_I_Num = function(latestNumeral){
-			// setBtnDisabledProp(0, 5, true);
-			// if( (inputRoman.textContent.match(/V/g) || []).length +
-			//     (inputRoman.textContent.match(/IX/g) || []).length === 0){
-			// 	setBtnDisabledProp(4, 6, false);
-			// }
-			// if(inputRoman.textContent.slice(-1) + latestNumeral === 'II') {
-			// 	setBtnDisabledProp(4, 5, true);
-			// }
+			setBtnDisabledProp(0, 5, true);
+			if( (inputRoman.textContent.match(/V/g) || []).length +
+			    (inputRoman.textContent.match(/IX/g) || []).length === 0){
+				setBtnDisabledProp(4, 6, false);
+			}
+			if(inputRoman.textContent.slice(-1) + latestNumeral === 'II') {
+				setBtnDisabledProp(4, 5, true);
+			}
 		};
 
 		var allInputFunctions = [
@@ -489,32 +489,33 @@
 			if( romanInput.indexOf('XXX') >= 0) {	
 				allNumerals[4].disabled = true;	
 			} 
-			if( romanInput.indexOf('XX') >= 0 ||
+			if( romanInput.indexOf('I') >= 0  ||
+				romanInput.indexOf('XX') >= 0 ||
 				romanInput.indexOf('L') >= 0  ||
-				romanInput.indexOf('XC') >= 0){
+				romanInput.indexOf('XC') >= 0) {
 				  setBtnDisabledProp(2,3,true);
 			}
 			if( romanInput.indexOf('XV') >= 0) {	
 				allNumerals[5].disabled = true;
 			} 
 		};
-		var delete_V_Num =  function(romanInput){
-			// if( (romanInput.match(/X/g) || []).length === 0){
-			// 	allNumerals[5].disabled = false;
-			// }
-		};
-		var delete_I_Num =  function(romanInput){
-			// setBtnDisabledProp(0,5,true);
-			// if((romanInput.match(/III/g) || []).length === 0) {	
-			// 	allNumerals[6].disabled = false;	
-			// } 
-			// if( (romanInput.match(/II/g) || []).length +
-			// 	(romanInput.match(/V/g) || []).length +
-			// 	(romanInput.match(/IX/g) || []).length +
-			// 	(romanInput.match(/XV/g) || []).length === 0){
-			// 	 setBtnDisabledProp(4,5,false);
-			// }
 
+		var delete_V_Num =  function(romanInput){
+			setBtnDisabledProp(0,4,true);
+			setBtnDisabledProp(4,6,false);
+		};
+
+		var delete_I_Num =  function(romanInput){
+			setBtnDisabledProp(0,5,true);
+			allNumerals[6].disabled = false;
+			if( romanInput.indexOf('II') < 0) {
+				if(romanInput.indexOf('IV') < 0) {
+					allNumerals[5].disabled = false;
+				}
+				if(romanInput.indexOf('IX') < 0) {
+					allNumerals[4].disabled = false;
+				}
+			}
 		};
 
 		var allowAllNumerals = function(){
