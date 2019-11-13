@@ -353,68 +353,68 @@
 		
 
 		/* Addition Processing */
-		var process_M_Num = function(latestNumeral){
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CM'){
+		var process_M_Num = function(latestNumeral, curRomanInput){
+			if(curRomanInput.slice(-1) + latestNumeral === 'CM'){
 				setBtnDisabledProp(0,2,true);
 			}
 		};
 
-		var process_D_Num = function(latestNumeral){
+		var process_D_Num = function(latestNumeral, curRomanInput){
 			setBtnDisabledProp(0, 1, true);
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CD'){
+			if(curRomanInput.slice(-1) + latestNumeral === 'CD'){
 				setBtnDisabledProp(0,2,true);
 			}
 		};
 
-		var process_C_Num = function(latestNumeral){
+		var process_C_Num = function(latestNumeral, curRomanInput){
 			setBtnDisabledProp(0, 1, true);
-			if( (inputRoman.textContent.match(/CM/g) || []).length +
-			    (inputRoman.textContent.match(/D/g) || []).length === 0){
+			if( (curRomanInput.match(/CM/g) || []).length +
+			    (curRomanInput.match(/D/g) || []).length === 0){
 				setBtnDisabledProp(0, 1, false);
 			}
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XC'){
+			if(curRomanInput.slice(-1) + latestNumeral === 'XC'){
 				setBtnDisabledProp(0,4,true);
 			}
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'CC') {
+			if(curRomanInput.slice(-1) + latestNumeral === 'CC') {
 				setBtnDisabledProp(0, 1, true);
 			}		
 		};
 
-		var process_L_Num = function(latestNumeral){
+		var process_L_Num = function(latestNumeral, curRomanInput){
 			setBtnDisabledProp(0,3,true);
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XL') {
+			if(curRomanInput.slice(-1) + latestNumeral === 'XL') {
 				allNumerals[4].disabled = true;
 			}	
 		};
 
-		var process_X_Num = function(latestNumeral){
+		var process_X_Num = function(latestNumeral, curRomanInput){
 			setBtnDisabledProp(0,3,true);
-			if( (inputRoman.textContent.match(/XC/g) || []).length +
-				(inputRoman.textContent.match(/L/g) || []).length === 0){
+			if( (curRomanInput.match(/XC/g) || []).length +
+				(curRomanInput.match(/L/g) || []).length === 0){
 				  setBtnDisabledProp(2,3,false);
 			}
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'XX') {
+			if(curRomanInput.slice(-1) + latestNumeral === 'XX') {
 				setBtnDisabledProp(2, 3, true);
 			}	
-			if(inputRoman.textContent.slice(-1) === 'I' ){
+			if(curRomanInput.slice(-1) === 'I' ){
 				setBtnDisabledProp(0,6,true);
 			}
 		};
 
-		var process_V_Num = function(){
+		var process_V_Num = function(latestNumeral, curRomanInput){
 			setBtnDisabledProp(0,5,true);
-			if(inputRoman.textContent.slice(-1) === 'I' ){
+			if(curRomanInput.slice(-1) === 'I' ){
 				setBtnDisabledProp(0,6,true);
 			}
 		};
 
-		var process_I_Num = function(latestNumeral){
+		var process_I_Num = function(latestNumeral, curRomanInput){
 			setBtnDisabledProp(0, 5, true);
-			if( (inputRoman.textContent.match(/V/g) || []).length +
-			    (inputRoman.textContent.match(/IX/g) || []).length === 0){
+			if( (curRomanInput.match(/V/g) || []).length +
+			    (curRomanInput.match(/IX/g) || []).length === 0){
 				setBtnDisabledProp(4, 6, false);
 			}
-			if(inputRoman.textContent.slice(-1) + latestNumeral === 'II') {
+			if(curRomanInput.slice(-1) + latestNumeral === 'II') {
 				setBtnDisabledProp(4, 5, true);
 			}
 		};
@@ -429,135 +429,43 @@
 			process_I_Num
 		];
 
-		/* Deletion Functions */
-
-		var delete_M_Num = function(romanInput){
-			setBtnDisabledProp(0,6,false);
-			if( romanInput.indexOf('MMM') >= 0) {
-				allNumerals[0].disabled = true;
-			}
-			if(romanInput.slice(-1) === 'C') {
-				allNumerals[1].disabled = false;
-			}
-		};
-
-		var delete_D_Num = function(romanInput){
-			setBtnDisabledProp(0,6,false);
-			if( romanInput.indexOf('MMM') >= 0) {
-				allNumerals[0].disabled = true;
-			}
-		};
-
-		var delete_C_Num = function(romanInput){
-			setBtnDisabledProp(0,6,false);
-			if( romanInput.indexOf('X') >= 0) {
-				setBtnDisabledProp(0,1,true);
-			}
-			if( romanInput.indexOf('CC') >= 0 || 
-				romanInput.indexOf('CM') >= 0) {
-				allNumerals[0].disabled = true;
-			}
-			if( romanInput.indexOf('D') >= 0 || 
-				romanInput.indexOf('CC') >= 0) {
-				allNumerals[1].disabled = true;
-			}
-			if( romanInput.indexOf('CCC') >= 0) {	
-				allNumerals[2].disabled = true;	
-			} 
-		};
-
-		var delete_L_Num =  function(romanInput){
-			setBtnDisabledProp(0,6,false);
-			if( romanInput.indexOf('X') >= 0) {
-				setBtnDisabledProp(0,1,true);
-			}
-			if( romanInput.indexOf('CM') >= 0 ||
-				romanInput.indexOf('MMM') >= 0) {
-				allNumerals[0].disabled = true;
-			}
-			if( romanInput.indexOf('CD') >= 0 ||
-				romanInput.indexOf('D') >= 0) {
-				allNumerals[1].disabled = true;
-			}
-			if( romanInput.indexOf('CCC') >= 0) {
-				allNumerals[2].disabled = true;
-			}
-		};
-
-		var delete_X_Num =  function(romanInput){
-			setBtnDisabledProp(2,6,false);
-			if( romanInput.indexOf('XXX') >= 0) {	
-				allNumerals[4].disabled = true;	
-			} 
-			if( romanInput.indexOf('I') >= 0  ||
-				romanInput.indexOf('XX') >= 0 ||
-				romanInput.indexOf('L') >= 0  ||
-				romanInput.indexOf('XC') >= 0) {
-				  setBtnDisabledProp(2,3,true);
-			}
-			if( romanInput.indexOf('XV') >= 0) {	
-				allNumerals[5].disabled = true;
-			} 
-		};
-
-		var delete_V_Num =  function(romanInput){
-			setBtnDisabledProp(0,4,true);
-			setBtnDisabledProp(4,6,false);
-		};
-
-		var delete_I_Num =  function(romanInput){
-			setBtnDisabledProp(0,5,true);
-			allNumerals[6].disabled = false;
-			if( romanInput.indexOf('II') < 0) {
-				if(romanInput.indexOf('IV') < 0) {
-					allNumerals[5].disabled = false;
-				}
-				if(romanInput.indexOf('IX') < 0) {
-					allNumerals[4].disabled = false;
-				}
-			}
-		};
-
 		var allowAllNumerals = function(){
 			setBtnDisabledProp(0,6,false);
-		};
-
-		var allDeletionFunctions = [
-			delete_M_Num, 
-			delete_D_Num, 
-			delete_C_Num,  
-			delete_L_Num,  
-			delete_X_Num,  
-			delete_V_Num,  
-			delete_I_Num
-		];
-
-		var processDeletion = function(deletedNumeral, romanInput){
-			/* index needed to call appropriate deletion processing function */
-	  		var indexLastRomanNumeral = getIndexFromNumeral(deletedNumeral);
-	  		allDeletionFunctions[parseInt(indexLastRomanNumeral)](romanInput);
 		};
 
 		document
 			.getElementById('numeral_input_pad')
 			.addEventListener('click', 
 				function(event){
-				 
+
+				  var curRomanInput = inputRoman.textContent;
+ 
 				  if(event.target.classList.contains('numeral')) {
 
-				    allInputFunctions[parseInt(event.target.dataset.index)](event.target.value);
+				  	var addedNumeral = event.target.value; 	
+
+				    allInputFunctions[parseInt(event.target.dataset.index)](addedNumeral, curRomanInput);
 				    runRuleOfThrees(event.target.value, event.target.dataset.index, inputRoman.textContent);
 				  	inputRoman.textContent += event.target.value;
 				  	delBtn.disabled = false;
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
 
-				  		var deletedRomanNumeral = inputRoman.textContent.slice(-1) || '';
+
 	  					inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-				  		processDeletion(deletedRomanNumeral, inputRoman.textContent);
+
+				  		var fakeLastNumeral = inputRoman.textContent.slice(-1);
+
+
+	  					var fakeCurRomanInput = inputRoman.textContent.slice(0,-1);
+
+	  					var indFakeLast = getIndexFromNumeral(fakeLastNumeral);
+						
+						allowAllNumerals();
+
+	  					allInputFunctions[parseInt(indFakeLast)](fakeLastNumeral, fakeCurRomanInput);
 
 				  		if(!inputRoman.textContent.length) {
-				  			allowAllNumerals();
 				  			delBtn.disabled = true;
 				  		}
 
