@@ -476,10 +476,12 @@
 				  } else if(event.target.classList.contains('delete')) {
 
 	  					inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-	  					processNumeralDeletion(inputRoman.textContent);
 
 				  		if(!inputRoman.textContent.length) {
+				  			allowAllNumerals();
 				  			delBtn.disabled = true;
+				  		} else {
+	  						processNumeralDeletion(inputRoman.textContent);
 				  		}
 
 				  }
