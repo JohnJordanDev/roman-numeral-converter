@@ -308,7 +308,6 @@
 			}
 
 			if( isDupleRomanNmeral(inputString.substring(0,2)) ){ 
-				console.log('a duple');
 				return [inputString.substring(0,2)].concat(parseromanInput(inputString.substring(2)));
 			}
 
@@ -316,12 +315,10 @@
 
 		};
 
-		/* Time/Global Context Processing */
-
+		/* Global Context Processing */
 
 		var allNumerals = document.querySelectorAll('#numeral_input_pad > .row > .numeral');
 		var delBtn = document.querySelector('button.delete');
-		console.log(allNumerals);
 
 
 		var setBtnDisabledProp = function(startIndex, stopIndex, value){
@@ -330,7 +327,7 @@
 			}
 		};
 
-		var runRuleOfThrees = function(numeralValue, numeralIndex, currentInput){
+		var runRuleOfThrees = function( numeralIndex, numeralValue, currentInput){
 			var triple = numeralValue + numeralValue + numeralValue;
 			if(currentInput.slice(-2) + numeralValue === triple){
 				return allNumerals[numeralIndex].disabled = true;
@@ -433,37 +430,39 @@
 			setBtnDisabledProp(0,6,false);
 		};
 
+		var getDeletionCriteria = function(updatedRomanInput) {
+  			var fakeLastNumeral = updatedRomanInput.slice(-1);
+			var fakeCurRomanInput = updatedRomanInput.slice(0,-1);
+			var indexFakeLastNumeral = getIndexFromNumeral(fakeLastNumeral);
+			return [indexFakeLastNumeral, fakeLastNumeral, fakeCurRomanInput];		
+  		};
+
+  		var processNumeralDeletion = function(newInputRoman) {
+			allowAllNumerals();
+  			var deletionCriteria = getDeletionCriteria(newInputRoman);
+			allInputFunctions[deletionCriteria[0]](deletionCriteria[1], deletionCriteria[2]);
+  		};
+
+  		var processNumeralAddition = function(indexAddedNumeral, addedNumeral, curRomanInput) {
+			allInputFunctions[indexAddedNumeral](addedNumeral, curRomanInput);
+			runRuleOfThrees( indexAddedNumeral, addedNumeral, curRomanInput);
+			inputRoman.textContent += addedNumeral;
+  		};
+
 		document
 			.getElementById('numeral_input_pad')
 			.addEventListener('click', 
 				function(event){
-
-				  var curRomanInput = inputRoman.textContent;
  
 				  if(event.target.classList.contains('numeral')) {
 
-				  	var addedNumeral = event.target.value; 	
-
-				    allInputFunctions[parseInt(event.target.dataset.index)](addedNumeral, curRomanInput);
-				    runRuleOfThrees(event.target.value, event.target.dataset.index, inputRoman.textContent);
-				  	inputRoman.textContent += event.target.value;
+				 	processNumeralAddition(event.target.dataset.index, event.target.value, inputRoman.textContent);
 				  	delBtn.disabled = false;
   	 	 
 				  } else if(event.target.classList.contains('delete')) {
 
-
 	  					inputRoman.textContent = inputRoman.textContent.slice(0,-1);
-
-				  		var fakeLastNumeral = inputRoman.textContent.slice(-1);
-
-
-	  					var fakeCurRomanInput = inputRoman.textContent.slice(0,-1);
-
-	  					var indFakeLast = getIndexFromNumeral(fakeLastNumeral);
-						
-						allowAllNumerals();
-
-	  					allInputFunctions[parseInt(indFakeLast)](fakeLastNumeral, fakeCurRomanInput);
+	  					processNumeralDeletion(inputRoman.textContent);
 
 				  		if(!inputRoman.textContent.length) {
 				  			delBtn.disabled = true;
