@@ -454,6 +454,7 @@
 			allowAllNumerals();
   			var deletionCriteria = getDeletionCriteria(newInputRoman);
 			allInputFunctions[deletionCriteria[0]](deletionCriteria[1], deletionCriteria[2]);
+			runRuleOfThrees( deletionCriteria[0], deletionCriteria[1], deletionCriteria[2]);
   		};
 
   		var processNumeralAddition = function(indexAddedNumeral, addedNumeral, curRomanInput) {
