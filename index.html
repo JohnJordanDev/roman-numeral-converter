@@ -447,14 +447,14 @@
   			var fakeLastNumeral = updatedRomanInput.slice(-1);
 			var fakeCurRomanInput = updatedRomanInput.slice(0,-1);
 			var indexFakeLastNumeral = getIndexFromNumeral(fakeLastNumeral);
-			return [indexFakeLastNumeral, fakeLastNumeral, fakeCurRomanInput];		
+			return {index: indexFakeLastNumeral, lastNumeral: fakeLastNumeral, curRomanInput:fakeCurRomanInput};
   		};
 
   		var processNumeralDeletion = function(newInputRoman) {
 			allowAllNumerals();
-  			var deletionCriteria = getDeletionCriteria(newInputRoman);
-			allInputFunctions[deletionCriteria[0]](deletionCriteria[1], deletionCriteria[2]);
-			runRuleOfThrees( deletionCriteria[0], deletionCriteria[1], deletionCriteria[2]);
+  			var d = getDeletionCriteria(newInputRoman);
+			allInputFunctions[d.index](d.lastNumeral, d.curRomanInput);
+			runRuleOfThrees(d.index, d.lastNumeral, d.curRomanInput);
   		};
 
   		var processNumeralAddition = function(indexAddedNumeral, addedNumeral, curRomanInput) {
