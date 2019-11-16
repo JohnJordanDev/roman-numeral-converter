@@ -160,9 +160,10 @@
 			text-align: center;
 			font-size: 4rem;
 			opacity: 0.1;
+			height: 100%;
 		}
 
-		.sidebar-banner .icon-wrapper > div {
+		.sidebar-banner .icon-wrapper > .d-cell > div {
 			padding: 1rem 0;
 		}
 
@@ -212,7 +213,7 @@
 
 
 			.sidebar-banner {
-			  display: table;
+			  display: block;
 		    }
 
 		  	main {
@@ -246,12 +247,14 @@
 		  	</header>
 		</nav>
 		<div class="sidebar-banner --left">
-			<div class="icon-wrapper d-cell v-middle">
-				<div>I</div>
-				<div>II</div>
-				<div>III</div>
-				<div>IV</div>
-				<div>V</div>
+			<div class="icon-wrapper d-table">
+				<div class="d-cell v-middle">
+					<div>I</div>
+					<div>II</div>
+					<div>III</div>
+					<div>IV</div>
+					<div>V</div>
+				</div>
 			</div>	
 		</div>
 		<main id="main_content">
@@ -281,12 +284,14 @@
 		  		</div>
 		  	</section>
 		</main><div class="sidebar-banner --right">
-			<div class="icon-wrapper d-cell v-middle">
-				<div>1</div>
-				<div>2</div>
-				<div>3</div>
-				<div>4</div>
-				<div>5</div>
+			<div class="icon-wrapper d-table">
+				<div class="d-cell v-middle">
+					<div>1</div>
+					<div>2</div>
+					<div>3</div>
+					<div>4</div>
+					<div>5</div>
+				</div>
 			</div>
 		</div>
 		<footer>The footer</footer>
