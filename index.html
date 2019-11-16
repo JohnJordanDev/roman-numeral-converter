@@ -478,7 +478,6 @@
   		};
 
   		var processNumeralDeletion = function(newInputRoman) {
-			allowAllNumerals();
   			var d = getDeletionCriteria(newInputRoman);
 			allInputFunctions[d.index](d.lastNumeral, d.curRomanInput);
 			runRuleOfThrees(d.index, d.lastNumeral, d.curRomanInput);
@@ -503,9 +502,9 @@
 				  } else if(event.target.classList.contains('delete')) {
 
 	  					inputRoman.textContent = inputRoman.textContent.slice(0,-1);
+						allowAllNumerals();
 
 				  		if(!inputRoman.textContent.length) {
-				  			allowAllNumerals();
 				  			delBtn.disabled = true;
 				  		} else {
 	  						processNumeralDeletion(inputRoman.textContent);
