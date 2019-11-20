@@ -76,7 +76,7 @@
 		}
 		body {
 			font-family: Jost, sans-serif;
-			font-weight: normal;
+			font-weight: 300;
 		}
 
 		header, section, button {
@@ -86,12 +86,9 @@
 
 		h1 {
 			font-size: 1.25rem;
-			font-weight: bold;
+			font-weight: 300;
 		}
 
-		#numeral_input_pad {
-			font-family: Jost;
-		}
 
 		.placeholder {
 			font-size: 0.875rem;
@@ -104,19 +101,16 @@
 			height: 6rem;
 
 			font-size: 3rem;
-			font-weight: bold;
+			font-weight: normal;
 		} 
 
 		.input-roman {
-			height: 2rem;
-			word-wrap: break-word;
-			word-break: break-all;
-			line-height: 1;
-			
-			border: 1px solid #000000;
-			border-left: none;
-			border-right: none;
+			font-weight: 300;
 
+		}
+
+		.numeral-wrapper {
+			font-weight: normal;
 		}
 
 		/* Layout */
@@ -160,6 +154,18 @@
 
 		output {
 			height: 6rem;
+		}
+
+		.input-roman {
+			height: 2rem;
+			word-wrap: break-word;
+			word-break: break-all;
+			line-height: 1;
+			
+			border: 1px solid #000000;
+			border-left: none;
+			border-right: none;
+
 		}
 
 		.numeral, .delete, .spacer {
