@@ -7,13 +7,18 @@
 	<style>
 		@font-face {
 			font-family: Jost;
-  			src: url(css/fonts/jost-300-medium-webfont.woff);
+  			src: url(css/fonts/jost-300-light-webfont.woff);
+  			font-weight: 300;
+		}
+		@font-face {
+			font-family: Jost;
+  			src: url(css/fonts/jost-500-medium-webfont.woff);
   			font-weight: normal;
 		}
 
 		@font-face {
 			font-family: Jost;
-  			src: url(css/fonts/jost-500-medium-webfont.woff);
+  			src: url(css/fonts/jost-700-bold-webfont.woff);
   			font-weight: bold;
 		}
 		/* CSS Mini Reset */
@@ -32,6 +37,16 @@
 		    border: 0;
 		    outline: 0;
 		    background: transparent;
+		}
+
+		button {
+			font-family: inherit;
+			font-size: 100%; /* 1 */
+
+  			line-height: 1.15; /* 1 */
+
+  			margin: 0; /* 2 */
+   			-webkit-appearance: button;
 		}
 
 		table {
@@ -59,8 +74,9 @@
 		* {
 			box-sizing: border-box;
 		}
-		body, button {
+		body {
 			font-family: Jost, sans-serif;
+			font-weight: normal;
 		}
 
 		header, section, button {
@@ -69,11 +85,18 @@
 		}
 
 		h1 {
-			font-weight: 700;
+			font-size: 1.25rem;
+			font-weight: bold;
+		}
+
+		#numeral_input_pad {
+			font-family: Jost;
 		}
 
 		.placeholder {
 			font-size: 0.875rem;
+			font-weight: 300;
+
 			line-height: 1;
 		}
 
@@ -129,10 +152,6 @@
 		   width: 100%;
 		   height: 20px;
 		   background-color: black;
-		}
-
-		h1 {
-			font-size: 1rem;
 		}
 
 		section {
@@ -218,7 +237,7 @@
 		}
 
 
-		@media only screen and (min-width: 968px) {
+		@media only screen and (min-width: 768px) {
 
 			header h1, .input-roman {
 				font-size: 2rem;
