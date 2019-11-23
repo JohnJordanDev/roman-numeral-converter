@@ -9,17 +9,20 @@
 			font-family: Jost;
   			src: url(css/fonts/jost-300-light-webfont.woff);
   			font-weight: 300;
+  			font-display: swap;
 		}
 		@font-face {
 			font-family: Jost;
   			src: url(css/fonts/jost-500-medium-webfont.woff);
   			font-weight: normal;
+  			font-display: swap;
 		}
 
 		@font-face {
 			font-family: Jost;
   			src: url(css/fonts/jost-700-bold-webfont.woff);
   			font-weight: bold;
+  			font-display: swap;
 		}
 		/* CSS Mini Reset */
 		html,body,div,form,fieldset,legend,caption,label,
@@ -32,7 +35,6 @@
 		    padding: 0;
 
 		    vertical-align: baseline;
-		    line-height: 1;
 
 		    border: 0;
 		    outline: 0;
@@ -42,8 +44,8 @@
 		button {
 			font-family: inherit;
 			font-size: 100%; 
+			font-weight: inherit;
 
-  			line-height: 1.15; 
 
   			margin: 0;
    			-webkit-appearance: button;
@@ -79,9 +81,12 @@
 			font-weight: 300;
 		}
 
+		.numeral, .delete, .spacer {
+			font-weight: 300;
+		}
+
 		header, section, button {
 			font-size: 2rem;
-			line-height: 2;
 		}
 
 		h1 {
@@ -94,7 +99,6 @@
 			font-size: 0.875rem;
 			font-weight: 300;
 
-			line-height: 1;
 		}
 
 		.output-wrapper.indo {
@@ -109,9 +113,6 @@
 
 		}
 
-		.numeral-wrapper {
-			font-weight: normal;
-		}
 
 		/* Layout */
 
@@ -125,6 +126,8 @@
 		body {
 			text-align: center;
 			position: relative;
+
+			overscroll-behavior: none;
    		}
 
 		#container {
@@ -146,9 +149,7 @@
 		}
 
 		main {
-			padding: 15px;
-   			padding-bottom: 40px;   /* Height of the footer */
-
+			padding: 0px 15px 40px; /* Height of the footer */
 		}
 
 		footer {
@@ -172,7 +173,6 @@
 			height: 2rem;
 			word-wrap: break-word;
 			word-break: break-all;
-			line-height: 1;
 			
 			border: 1px solid #000000;
 			border-left: none;
@@ -181,12 +181,17 @@
 		}
 
 		.numeral, .delete, .spacer {
-			width: 4rem;
 			font-size: 2rem;
+			height: 3rem;
+
+			width: 3rem;
 			max-width: 30%;
+
+			margin: 0 0.25rem;
 		}
 
 		section > .row {
+			line-height: 0;
 			margin-bottom: 1.5rem;
 		}
 
@@ -201,6 +206,7 @@
 		.sidebar-banner {
 			display: none;
 			width: 15%;
+			padding: 4rem 0;
 
 			position: absolute;
 			top: 0;
@@ -242,15 +248,26 @@
 		}
 
 		.output-wrapper {
-			height: 4rem;
+			height: 3rem;
+			margin-bottom: 3rem;
 		} 
 
+		.output-wrapper.entered.indo {
+			margin-bottom: 0;
+		}
+
 		.numeral-wrapper {
-			padding: 1rem 0;
+			padding: 0 1rem 1rem;
 		}
 
 		output {
 			text-align: center;
+		}
+
+		/* Styling */
+
+		.numeral, .delete, .spacer {
+			background-color: #EEEEEE;
 		}
 
 
@@ -277,12 +294,13 @@
 		 	}
 
 		 	section > .row {
-				margin-bottom: 3rem;
+				margin-bottom: 2rem;
 			}
 
 			.numeral, .delete, .spacer {
-				width: 5rem;
-				font-size: 2.5rem;
+
+				width: 4rem;
+				height: 4rem;
 			}
 			
 			.output-wrapper.indo {
@@ -312,7 +330,7 @@
 			</div>	
 		</div>
 		<main id="main_content">
-		  	<section class="output-wrapper indo d-table">
+		  	<section class="output-wrapper indo entered d-table">
 		  		<output class="d-cell v-middle" id="result_indo" name="result" for="input_roman">
 		  			<span class="placeholder d-table">Converted number will appear here</span>
 		  		</output>
