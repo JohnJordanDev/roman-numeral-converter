@@ -81,8 +81,9 @@
 			font-weight: 300;
 		}
 
-		.numeral, .delete, .spacer {
-			font-weight: 300;
+		
+		strong {
+			font-weight: normal;
 		}
 
 		header, section, button {
@@ -94,6 +95,9 @@
 			font-weight: 300;
 		}
 
+		.numeral, .delete, .spacer {
+			font-weight: 300;
+		}
 
 		.placeholder {
 			font-size: 0.875rem;
@@ -324,14 +328,72 @@
 
 	</style>
 	<style id="tab-nav">
+		/* Layout */
+		main {
+			position: relative;
+		}
 
-		#indo_to_rom,
-		#indo_tab:target ~ #rom_to_indo {
-			display: none;
+		#calc_wrapper {
+			position: relative;
+
+			width: 70%;
+			max-width: 500px;
+			margin: 0 auto;
+
+			overflow: hidden;
 		}
-		#indo_tab:target ~ #indo_to_rom {
-			display: block;
+
+		
+		#rom_to_indo {
+			right: 0;		
 		}
+
+		#indo_to_rom {
+			position: absolute;
+			top: 0;
+			right:0;
+			left: 101%;		
+
+			width: 100%;
+		}
+
+		a.tab-selector {
+			margin: 0 1em;
+		}
+
+
+		#indo_tab:target ~ #calc_wrapper #rom_to_indo {
+			right: 101%;
+		}
+
+
+		#indo_tab:target ~ #calc_wrapper #indo_to_rom {
+			left: 0;
+		}
+
+		/* Styling */
+
+		a.tab-selector, a.tab-selector:link, a.tab-selector:visited,
+		#indo_tab:target + #main_header  a.tab-selector:first-child {
+			font-weight: 300;
+			font-size: 1rem;
+
+			color: #999999;
+			text-decoration: none;	
+		}
+
+		a.tab-selector:first-child,
+		#indo_tab:target + #main_header a[href="#indo_tab"],
+		#roman_tab:target + #indo_tab + #main_header a[href="#roman_tab"] {
+			font-weight: bold;
+			color: #EF0606;
+		}
+
+		#rom_to_indo, #indo_to_rom, a.tab-selector {
+			-webkit-transition: all 0.25s ease-in-out;
+			transition: all 0.25s ease-in-out;
+		}
+
 	</style>
 </head>
 <body>
@@ -341,8 +403,8 @@
 		<header id="main_header">
 			<h1>Roman Numeral Converter</h1>
 			<nav id="main_nav">
-				<a href="#roman_tab" class="active">V -> 5</a>
-	  			<a href="#indo_tab">5 -> V</a>
+				<a href="#roman_tab" class="tab-selector">V -> 5</a>
+	  			<a href="#indo_tab" class="tab-selector">V <- 5</a>
 			</nav>
 		</header>
 		<div class="sidebar-banner left">
@@ -356,10 +418,11 @@
 				</div>
 			</div>	
 		</div>
-		<main id="rom_to_indo">
+		<div id="calc_wrapper">
+			<main id="rom_to_indo">
 		  	<section class="output-wrapper indo entered d-table">
 		  		<output class="d-cell v-middle" id="result_indo" name="result" for="input_roman">
-		  			<span class="placeholder d-table">Converted number will appear here</span>
+		  			<span class="placeholder d-table">Converted <strong>Roman</strong> number will appear here</span>
 		  		</output>
 		  	</section>
 		  	<section class="output-wrapper d-table">
@@ -384,6 +447,14 @@
 		  	</section>
 		</main>
 		<main id="indo_to_rom">
+			<section class="output-wrapper indo entered d-table">
+		  		<output class="d-cell v-middle" id="result_roman" name="result" for="input_indo">
+		  			<span class="placeholder d-table">Converted <strong>Indo-Arabic</strong> number will appear here</span>
+		  		</output>
+		  	</section>
+		  	<section class="output-wrapper d-table">
+		  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
+		  	</section>
 			<section id="digit_input_pad" class="digit-wrapper">
 		  		<div class="row">
 		  			<button class="digit" data-index="0" value="1">1</button>
@@ -401,8 +472,9 @@
 		  			<button class="delete" disabled="disabled"><</button>
 		  		</div>
 		  	</section>
-			
-		</main><div class="sidebar-banner right">
+		</main>
+		</div>
+		<div class="sidebar-banner right">
 			<div class="icon-wrapper d-table">
 				<div class="d-cell v-middle">
 					<div>1</div>
