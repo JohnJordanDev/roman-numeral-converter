@@ -39,6 +39,7 @@
 		    border: 0;
 		    outline: 0;
 		    background: transparent;
+
 		}
 
 		button {
@@ -128,11 +129,29 @@
 		}
 
 		body {
+			min-height: 100vh;
+
 			text-align: center;
 			position: relative;
 
 			overscroll-behavior: none;
    		}
+
+   		 section, h1, p {
+		    margin-bottom: 1rem;
+
+   		 }
+
+   		#main_nav {
+   			text-align: center;
+
+			margin: 0 auto;
+			max-width: 400px;
+
+			display: flex;
+			justify-content: space-evenly;
+			align-items: baseline;
+		}
 
 		#container {
 		   min-height:100%;
@@ -148,7 +167,23 @@
 
 		}
 
+		#calc_wrapper {
+			position: relative;
+
+			width: 100%;
+			max-width: 350px;
+			margin: 0 auto;
+
+			overflow: hidden;
+		}
+
+
 		main {
+			width: 100%;
+			max-width: 350px; 
+
+			margin: 0 auto;
+
 			padding: 0px 15px 40px; /* Height of the footer */
 		}
 
@@ -206,11 +241,6 @@
 		.sidebar-banner {
 			display: none;
 			width: 15%;
-			padding: 8rem 0 4rem;
-
-			position: absolute;
-			top: 0;
-			bottom: 0;
 
 			background-color: #FFFFFF;
 		}
@@ -278,17 +308,13 @@
 
 		@media only screen and (min-width: 768px) {
 
-			#main_nav {
-				width: auto;
+			#calc_wrapper {
+				display: inline-block;
 
-				display: flex;
-
-				margin: 0 auto;
-
-				max-width: 400px;
-
-				justify-content: space-evenly;
+				min-width: 70%;
+				max-width: 500px;
 			}
+
 
 			header h1, .input-roman {
 				font-size: 2rem;
@@ -300,15 +326,8 @@
 
 
 			.sidebar-banner {
-			  display: block;
+			  display: inline-block;
 		    }
-
-		  	main {
-			  width: 70%;
-			  max-width: 500px; 
-
-			  margin: 0 auto;
-		 	}
 
 		 	section > .row {
 				margin-bottom: 2rem;
@@ -333,16 +352,7 @@
 			position: relative;
 		}
 
-		#calc_wrapper {
-			position: relative;
-
-			width: 70%;
-			max-width: 500px;
-			margin: 0 auto;
-
-			overflow: hidden;
-		}
-
+	
 		
 		#rom_to_indo {
 			right: 0;		
@@ -358,7 +368,11 @@
 		}
 
 		a.tab-selector {
+			min-width: 48px;
+			min-height: 24px;
+
 			margin: 0 1em;
+
 		}
 
 
@@ -417,8 +431,7 @@
 					<div>V</div>
 				</div>
 			</div>	
-		</div>
-		<div id="calc_wrapper">
+		</div><div id="calc_wrapper">
 			<main id="rom_to_indo">
 		  	<section class="output-wrapper indo entered d-table">
 		  		<output class="d-cell v-middle" id="result_indo" name="result" for="input_roman">
@@ -473,8 +486,7 @@
 		  		</div>
 		  	</section>
 		</main>
-		</div>
-		<div class="sidebar-banner right">
+		</div><div class="sidebar-banner right">
 			<div class="icon-wrapper d-table">
 				<div class="d-cell v-middle">
 					<div>1</div>
