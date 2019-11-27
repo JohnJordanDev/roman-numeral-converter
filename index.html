@@ -252,7 +252,7 @@
 
 			background-color: #FFFFFF;
 
-			align-self: center;
+			align-self: stretch;
 		}
 
 		.sidebar-banner .icon-wrapper {
@@ -260,9 +260,18 @@
 			font-size: 4rem;
 			opacity: 0.1;
 			height: 100%;
+
+			display: flex;
+			justify-content: center;
 		}
 
-		.sidebar-banner .icon-wrapper > .d-cell > div {
+		.sidebar-banner .icons-parent {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+		}
+
+		.sidebar-banner .icon-wrapper .icons-parent > div {
 			padding: 1rem 0;
 		}
 
@@ -434,7 +443,7 @@
 		<section class="main-content-wrapper">
 			<div class="sidebar-banner left">
 				<div class="icon-wrapper d-table">
-					<div class="d-cell v-middle">
+					<div class="icons-parent">
 						<div>I</div>
 						<div>II</div>
 						<div>III</div>
@@ -499,7 +508,7 @@
 			</main>
 			</div><div class="sidebar-banner right">
 				<div class="icon-wrapper d-table">
-					<div class="d-cell v-middle">
+					<div class="icons-parent">
 						<div>1</div>
 						<div>2</div>
 						<div>3</div>
