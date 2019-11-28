@@ -215,6 +215,14 @@
 			height: 6rem;
 		}
 
+		output + .placeholder {
+			display: none;
+		}
+
+		output:empty + .placeholder {
+			display: block;
+		}
+
 		.input-roman {
 			height: 2rem;
 			word-wrap: break-word;
@@ -469,9 +477,10 @@
 			</div><div id="calc_wrapper">
 				<main id="rom_to_indo">
 			  	<section class="output-wrapper indo entered d-table">
-			  		<output class="d-cell v-middle" id="result_indo" name="result" for="input_roman">
+			  		<div class="d-cell v-middle">
+			  			<output id="result_indo" name="result" for="input_roman"></output>
 			  			<span class="placeholder d-table">Converted <strong>Roman</strong> number will appear here</span>
-			  		</output>
+			  		</div>
 			  	</section>
 			  	<section class="output-wrapper d-table">
 			  		<output class="input-roman d-cell v-middle" id="input_roman" name="input"></output>
@@ -496,9 +505,10 @@
 			</main>
 			<main id="indo_to_rom">
 				<section class="output-wrapper indo entered d-table">
-			  		<output class="d-cell v-middle" id="result_roman" name="result" for="input_indo">
+					<div class="d-cell v-middle">
+						<output id="result_roman" name="result" for="input_indo"></output>
 			  			<span class="placeholder d-table">Converted <strong>Indo-Arabic</strong> number will appear here</span>
-			  		</output>
+					</div>	
 			  	</section>
 			  	<section class="output-wrapper d-table">
 			  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
@@ -762,13 +772,31 @@
 				  }
 
 				  resultIndo.textContent = countRomanNumerals(parseromanInput(inputRoman.textContent));	
+				  if(resultIndo.textContent === '0'){
+					resultIndo.textContent = '';
+				  }
 
 	 		    }, 
 	 		false);
 
 	</script>
 	<script id="indo_calc">
-		
+		var gHold, currInp;
+		var inIndo = document.getElementById('input_indo');
+		var reRoman = document.getElementById('result_roman');
+
+		var getNewIndo = function(curr, digit){
+			return parseInt(curr + digit);
+		};
+
+		document.addEventListener('click', function(e){
+			console.log(e.target.classList, reRoman);
+			gHold = e.target.classList;
+			if(gHold[0] === 'numeral' && gHold[1] === 'indo'){
+				currInp = inIndo.textContent;
+				inIndo.textContent = getNewIndo(currInp, e.target.value);
+			}
+		});
 	</script>
 </body>
 </html>
