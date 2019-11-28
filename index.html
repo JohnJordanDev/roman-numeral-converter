@@ -532,7 +532,7 @@
 			  		<div class="row">
 			  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
 			  			<button class="numeral indo" value="0">0</button>
-			  			<button class="delete indo" disabled="disabled"><</button>
+			  			<button id="delete_indo" class="delete indo" disabled="disabled"><</button>
 			  		</div>
 			  	</section>
 			</main>
@@ -781,21 +781,31 @@
 
 	</script>
 	<script id="indo_calc">
-		var gHold, currInp;
+		var currInp;
 		var inIndo = document.getElementById('input_indo');
 		var reRoman = document.getElementById('result_roman');
+		var delIndo = document.getElementById('delete_indo');
 
-		var getNewIndo = function(curr, digit){
+		var getNewIndoAdd = function(curr, digit){
 			return parseInt(curr + digit);
 		};
 
+		var getNewIndoDel = function(curr){
+			return parseInt(curr.slice(0,-1)) || '';
+		};
+
 		document.addEventListener('click', function(e){
-			console.log(e.target.classList, reRoman);
-			gHold = e.target.classList;
-			if(gHold[0] === 'numeral' && gHold[1] === 'indo'){
+			if(e.target.classList.contains('indo')) {
 				currInp = inIndo.textContent;
-				inIndo.textContent = getNewIndo(currInp, e.target.value);
-			}
+
+				if(e.target.classList.contains('numeral')){
+					inIndo.textContent = getNewIndoAdd(currInp, e.target.value);
+				} else if(e.target.classList.contains('delete')) {
+					inIndo.textContent = getNewIndoDel(currInp);
+				}
+
+				delIndo.disabled = !inIndo.textContent.length;
+			}	
 		});
 	</script>
 </body>
