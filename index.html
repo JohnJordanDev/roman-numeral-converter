@@ -147,7 +147,7 @@
    			text-align: center;
 
 			margin: 0 auto;
-			max-width: 350px;
+			max-width: 200px;
 
 			display: flex;
 			justify-content: space-between;
@@ -237,8 +237,15 @@
 		}
 
 		section > .row {
-			line-height: 0;
 			margin-bottom: 1.5rem;
+
+			display: flex;
+			justify-content: space-around;
+		}
+
+		#indo_input_pad {
+			max-width: 280px;
+    		margin: 0 auto;
 		}
 
 		.numeral[disabled], .delete[disabled] {
@@ -324,8 +331,16 @@
 			background-color: #EEEEEE;
 		}
 
+		.numeral.indo {
+			border-radius: 50%;
+		}
+
 
 		@media only screen and (min-width: 768px) {
+
+			#main_nav {
+				max-width: 350px;
+			}
 
 			#calc_wrapper {
 				display: inline-block;
@@ -488,21 +503,26 @@
 			  	<section class="output-wrapper d-table">
 			  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
 			  	</section>
-				<section id="digit_input_pad" class="digit-wrapper">
+				<section id="indo_input_pad" class="digit-wrapper">
 			  		<div class="row">
-			  			<button class="digit" data-index="0" value="1">1</button>
-			  			<button class="digit" data-index="1" value="2">2</button>
-			  			<button class="digit" data-index="2" value="3">3</button>
+			  			<button class="numeral indo" value="1">1</button>
+			  			<button class="numeral indo" value="2">2</button>
+			  			<button class="numeral indo" value="3">3</button>
 			  		</div>
 			  		<div class="row">
-			  			<button class="digit" data-index="3" value="4">4</button>
-			  			<button class="digit" data-index="4" value="5">5</button>
-			  			<button class="digit" data-index="5" value="6">6</button>
+			  			<button class="numeral indo" value="4">4</button>
+			  			<button class="numeral indo" value="5">5</button>
+			  			<button class="numeral indo" value="6">6</button>
+			  		</div>
+			  		<div class="row">
+			  			<button class="numeral indo" value="7">7</button>
+			  			<button class="numeral indo" value="8">8</button>
+			  			<button class="numeral indo" value="9">9</button>
 			  		</div>
 			  		<div class="row">
 			  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
-			  			<button class="digit" data-index="6" value="0">0</button>
-			  			<button class="delete" disabled="disabled"><</button>
+			  			<button class="numeral indo" value="0">0</button>
+			  			<button class="delete indo" disabled="disabled"><</button>
 			  		</div>
 			  	</section>
 			</main>
@@ -587,7 +607,7 @@
 		/* Global Context Processing */
 
 		var allNumerals = document.querySelectorAll('#numeral_input_pad > .row > .numeral');
-		var delBtn = document.querySelector('button.delete');
+		var delBtn = document.querySelector('#numeral_input_pad button.delete');
 
 
 		var setBtnDisabledProp = function(startIndex, stopIndex, value){
@@ -746,6 +766,9 @@
 	 		    }, 
 	 		false);
 
+	</script>
+	<script id="indo_calc">
+		
 	</script>
 </body>
 </html>
