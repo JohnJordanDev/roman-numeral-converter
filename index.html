@@ -795,10 +795,11 @@
 
 	</script>
 	<script id="indo_calc">
-		var currInp;
+		var currInp, potentialInp;
 		var inIndo = document.getElementById('input_indo');
 		var reRoman = document.getElementById('result_roman');
 		var reRomanPlace = reRoman.nextElementSibling;
+		var indoNumerals = document.querySelectorAll('#indo_input_pad .numeral.indo');
 		var delIndo = document.getElementById('delete_indo');
 
 		var getNewIndoAdd = function(curr, digit){
@@ -870,15 +871,35 @@
 			return roman;
 		};
 
+		var applyUpperLim = function (potentialInp) {
+			return parseInt(potentialInp) > 3999;
+		};
+
+		var setDisabledProp = function(listEl, val){
+			for(var i = 0; i < listEl.length; i++) {
+				listEl[i].disabled = val;
+			}
+		};
+
 		document.addEventListener('click', function(e){
+			currInp = inIndo.textContent;
+
 			if(e.target.classList.contains('indo')) {
 				reRomanPlace.classList.add('d-none');
-				currInp = inIndo.textContent;
 
 				if(e.target.classList.contains('numeral')){
-					inIndo.textContent = getNewIndoAdd(currInp, e.target.value);
+					potentialInp =  getNewIndoAdd(currInp, e.target.value);
+
+					if(applyUpperLim(potentialInp)){
+						setDisabledProp(indoNumerals, true);
+					} else {
+						inIndo.textContent = potentialInp;
+					}
+
+
 				} else if(e.target.classList.contains('delete')) {
 					inIndo.textContent = getNewIndoDel(currInp);
+					setDisabledProp(indoNumerals, false);
 				}
 
 				delIndo.disabled = !inIndo.textContent.length;
@@ -887,7 +908,6 @@
 			var t = getUnitsFromIndo(inIndo.textContent, globUnits);
 			reRoman.textContent = getRomanFromUnits(t, dictIndoToRoman);
 			if(!reRoman.textContent){
-				console.log('empty', reRomanPlace);
 				reRomanPlace.classList.remove('d-none');
 			}
 
