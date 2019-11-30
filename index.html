@@ -781,6 +781,24 @@
 
 	</script>
 	<script id="indo_calc">
+		// Indo Input Processing
+		var globUnits = [1000, 100, 10, 1];
+
+		var getCountOfUnit = function (num, unit) {
+			return parseInt(num/unit);
+		};
+
+		var getUnitsInIndo = function (indoIn, units) {
+			var t = parseInt(indoIn), listCounts = [], count;
+			for(var i =0; i < globUnits.length; i++) {
+				count = getCountOfUnit(t, globUnits[i]);
+				listCounts.push(count);
+				t -= count * globUnits[i];
+			}
+			return listCounts;
+		};
+
+
 		var currInp;
 		var inIndo = document.getElementById('input_indo');
 		var reRoman = document.getElementById('result_roman');
@@ -805,7 +823,9 @@
 				}
 
 				delIndo.disabled = !inIndo.textContent.length;
-			}	
+			}
+			console.log(getUnitsInIndo(inIndo.textContent, globUnits));
+
 		});
 	</script>
 </body>
