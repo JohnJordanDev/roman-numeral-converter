@@ -146,6 +146,12 @@
 
    		 }
 
+   		 output {
+			text-align: center;
+
+			height: 6rem;
+		}
+
    		#main_nav {
    			text-align: center;
 
@@ -213,17 +219,13 @@
 		}
 
 
-		output {
-			height: 6rem;
-		}
-
-		output + .placeholder {
+/*		output + .placeholder {
 			display: none;
 		}
 
 		output:empty + .placeholder {
 			display: block;
-		}
+		}*/
 
 		.input-roman {
 			height: 2rem;
@@ -326,9 +328,7 @@
 			padding: 0 1rem 1rem;
 		}
 
-		output {
-			text-align: center;
-		}
+
 
 		/* Styling */
 
@@ -343,6 +343,10 @@
 
 		.numeral.indo {
 			border-radius: 50%;
+		}
+
+		.d-none {
+			display: none;
 		}
 
 
@@ -653,6 +657,7 @@
 		/* Input/Output Processing */
 		var inputRoman = document.getElementById('input_roman');
 		var resultIndo = document.getElementById('result_indo');
+		var resultIndoPlace = resultIndo.nextElementSibling;
 		
 
 		/* Addition Processing */
@@ -761,6 +766,7 @@
 				function(event){
  
 				  if(event.target.classList.contains('numeral')) {
+				  	resultIndoPlace.classList.add('d-none');
 
 				 	processNumeralAddition(event.target.dataset.index, event.target.value, inputRoman.textContent);
 				  	delBtn.disabled = false;
@@ -781,6 +787,7 @@
 				  resultIndo.textContent = countRomanNumerals(parseromanInput(inputRoman.textContent));	
 				  if(resultIndo.textContent === '0'){
 					resultIndo.textContent = '';
+					resultIndoPlace.classList.remove('d-none');
 				  }
 
 	 		    }, 
@@ -791,6 +798,7 @@
 		var currInp;
 		var inIndo = document.getElementById('input_indo');
 		var reRoman = document.getElementById('result_roman');
+		var reRomanPlace = reRoman.nextElementSibling;
 		var delIndo = document.getElementById('delete_indo');
 
 		var getNewIndoAdd = function(curr, digit){
@@ -864,6 +872,7 @@
 
 		document.addEventListener('click', function(e){
 			if(e.target.classList.contains('indo')) {
+				reRomanPlace.classList.add('d-none');
 				currInp = inIndo.textContent;
 
 				if(e.target.classList.contains('numeral')){
@@ -877,6 +886,10 @@
 
 			var t = getUnitsFromIndo(inIndo.textContent, globUnits);
 			reRoman.textContent = getRomanFromUnits(t, dictIndoToRoman);
+			if(!reRoman.textContent){
+				console.log('empty', reRomanPlace);
+				reRomanPlace.classList.remove('d-none');
+			}
 
 		});
 	</script>
