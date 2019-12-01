@@ -106,8 +106,7 @@
 
 		}
 
-		.output-wrapper.indo {
-			height: 6rem;
+		.output-wrapper.indo, .output-wrapper.converted-roman {
 
 			font-size: 3rem;
 			font-weight: normal;
@@ -194,10 +193,11 @@
 			
 			width: 100%;
 			max-width: 350px;
+
 			margin: 0 auto;
+			padding-top: 1rem;
 
 			overflow: hidden;
-
 		}
 
 		main {
@@ -209,6 +209,11 @@
 			padding: 0px 15px;
 		}
 
+		.output-wrapper.indo, .output-wrapper.converted-roman {
+			height: 6rem;
+			margin-bottom: 0;
+		}
+
 		footer {
 		   position:absolute;
 		   bottom: 0;
@@ -218,23 +223,10 @@
 		   background-color: black;
 		}
 
-
-/*		output + .placeholder {
-			display: none;
-		}
-
-		output:empty + .placeholder {
-			display: block;
-		}*/
-
 		.input-roman {
 			height: 2rem;
 			word-wrap: break-word;
 			word-break: break-all;
-			
-			border: 1px solid #000000;
-			border-left: none;
-			border-right: none;
 
 		}
 
@@ -320,7 +312,7 @@
 			margin-bottom: 2rem;
 		} 
 
-		.output-wrapper.entered.indo {
+		.output-wrapper.converted-roman {
 			margin-bottom: 0;
 		}
 
@@ -328,10 +320,7 @@
 			padding: 0 1rem 1rem;
 		}
 
-
-
 		/* Styling */
-
 		#main_header {
 			background-color: white;
 			box-shadow: 0 2px 4px rgba(0,0,0,.5);
@@ -349,6 +338,29 @@
 			display: none;
 		}
 
+		.border-t-b {
+			border: 1px solid #000000;
+			border-left: none;
+			border-right: none;
+		}
+
+		/* Tooltip */
+		.tooltip-wrapper {
+			position: relative;
+		}
+
+		.tooltip {
+			font-size: 1rem;
+
+			position: absolute;
+			top: -1rem;
+			right: 0;
+			left: 0;
+
+			background-color: #999999;
+			z-index: 4;
+		}
+
 
 		@media only screen and (min-width: 768px) {
 
@@ -359,7 +371,7 @@
 			#calc_wrapper {
 				display: inline-block;
 
-				min-width: 70%;
+				width: 70%;
 				max-width: 500px;
 			}
 
@@ -398,6 +410,10 @@
 				font-size: 5rem;
 				height: 10rem;
 			} 
+
+			.output-wrapper.converted-roman {
+				height: 10rem;
+			}
 		}
 
 	</style>
@@ -462,6 +478,67 @@
 		}
 
 	</style>
+	<style id="animations">
+			@-webkit-keyframes shake {
+		  from,
+		  to {
+		    -webkit-transform: translate3d(0, 0, 0);
+		    transform: translate3d(0, 0, 0);
+		  }
+
+		  10%,
+		  30%,
+		  50%,
+		  70%,
+		  90% {
+		    -webkit-transform: translate3d(-10px, 0, 0);
+		    transform: translate3d(-10px, 0, 0);
+		  }
+
+		  20%,
+		  40%,
+		  60%,
+		  80% {
+		    -webkit-transform: translate3d(10px, 0, 0);
+		    transform: translate3d(10px, 0, 0);
+		  }
+		}
+
+		@keyframes shake {
+		  from,
+		  to {
+		    -webkit-transform: translate3d(0, 0, 0);
+		    transform: translate3d(0, 0, 0);
+		  }
+
+		  10%,
+		  50%,
+		  90% {
+		    -webkit-transform: translate3d(-1rem, 0, 0);
+		    transform: translate3d(-1rem, 0, 0);
+		  }
+
+		  30%,
+		  70% {
+		    -webkit-transform: translate3d(1rem, 0, 0);
+		    transform: translate3d(1rem, 0, 0);
+		  }
+		}
+
+		.shake {
+		  -webkit-animation-name: shake;
+		  animation-name: shake;
+		}
+
+		.animated {
+		  -webkit-animation-duration: 0.5s;
+		  animation-duration: 0.5s;
+		  -webkit-animation-fill-mode: both;
+		  animation-fill-mode: both;
+		}
+
+		
+	</style>
 </head>
 <body>
 	<div id="container">
@@ -493,7 +570,7 @@
 			  			<span class="placeholder d-table">Converted <strong>Roman</strong> number will appear here</span>
 			  		</div>
 			  	</section>
-			  	<section class="output-wrapper d-table">
+			  	<section class="output-wrapper border-t-b d-table">
 			  		<output class="input-roman d-cell v-middle" id="input_roman" name="input"></output>
 			  	</section>
 			  	<section id="numeral_input_pad" class="numeral-wrapper">
@@ -515,14 +592,15 @@
 			  	</section>
 			</main>
 			<main id="indo_to_rom">
-				<section class="output-wrapper indo entered d-table">
+				<section class="output-wrapper converted-roman d-table">
 					<div class="d-cell v-middle">
 						<output id="result_roman" name="result" for="input_indo"></output>
 			  			<span class="placeholder d-table">Converted <strong>Indo-Arabic</strong> number will appear here</span>
 					</div>	
 			  	</section>
-			  	<section class="output-wrapper d-table">
+			  	<section class="output-wrapper border-t-b d-table tooltip-wrapper">
 			  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
+			  		<span id="tooltip_large_input" class="tooltip">3,999 is the largest input allowed, sorry!</span>
 			  	</section>
 				<section id="indo_input_pad" class="digit-wrapper">
 			  		<div class="row">
@@ -892,8 +970,10 @@
 
 					if(applyUpperLim(potentialInp)){
 						setDisabledProp(indoNumerals, true);
+						inIndo.classList.add('shake', 'animated');
 					} else {
 						inIndo.textContent = potentialInp;
+						inIndo.classList.remove('shake', 'animated');
 					}
 
 
