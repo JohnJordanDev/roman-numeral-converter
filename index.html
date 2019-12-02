@@ -140,7 +140,7 @@
 			overscroll-behavior: none;
    		}
 
-   		 section, h1, p {
+   		 section, p {
 		    margin-bottom: 1rem;
 
    		 }
@@ -178,7 +178,7 @@
 			z-index: 3;
 			width: 100%;
 
-			padding: 1rem 0;
+			padding: 1rem 0 0.5rem;
 
 		}
 
@@ -350,15 +350,27 @@
 		}
 
 		.tooltip {
+			display: none;
+
 			font-size: 1rem;
 
 			position: absolute;
-			top: -1rem;
+			top: -2rem;
 			right: 0;
 			left: 0;
 
-			background-color: #999999;
 			z-index: 4;
+			padding: 0.5rem;
+		}
+
+		.tooltip.red {
+			background-color: #DDDDDD;
+			border: solid 1px #EF0606;
+			box-shadow: #EF0606 3px 3px 0px 0px;
+		}
+
+		.tooltip.show {
+			display: block;
 		}
 
 
@@ -600,7 +612,7 @@
 			  	</section>
 			  	<section class="output-wrapper border-t-b d-table tooltip-wrapper">
 			  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
-			  		<span id="tooltip_large_input" class="tooltip">3,999 is the largest input allowed, sorry!</span>
+			  		<span id="tooltip_large_input" class="tooltip red">3,999 is the largest input allowed, sorry!</span>
 			  	</section>
 				<section id="indo_input_pad" class="digit-wrapper">
 			  		<div class="row">
@@ -880,6 +892,8 @@
 		var indoNumerals = document.querySelectorAll('#indo_input_pad .numeral.indo');
 		var delIndo = document.getElementById('delete_indo');
 
+		var tooltip = document.getElementById('tooltip_large_input');
+
 		var getNewIndoAdd = function(curr, digit){
 			return parseInt(curr + digit);
 		};
@@ -959,6 +973,13 @@
 			}
 		};
 
+		var showToolTip = function() {
+			tooltip.classList.add('show');
+			setTimeout(function(){
+				tooltip.classList.remove('show');
+			}, 2000);
+		};
+
 		document.addEventListener('click', function(e){
 			currInp = inIndo.textContent;
 
@@ -971,6 +992,7 @@
 					if(applyUpperLim(potentialInp)){
 						setDisabledProp(indoNumerals, true);
 						inIndo.classList.add('shake', 'animated');
+						showToolTip();
 					} else {
 						inIndo.textContent = potentialInp;
 						inIndo.classList.remove('shake', 'animated');
@@ -980,6 +1002,7 @@
 				} else if(e.target.classList.contains('delete')) {
 					inIndo.textContent = getNewIndoDel(currInp);
 					setDisabledProp(indoNumerals, false);
+					tooltip.classList.remove('show');
 				}
 
 				delIndo.disabled = !inIndo.textContent.length;
