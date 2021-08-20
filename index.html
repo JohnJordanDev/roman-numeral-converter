@@ -147,8 +147,6 @@
 
    		 output {
 			text-align: center;
-
-			height: 6rem;
 		}
 
    		#main_nav {
@@ -210,7 +208,6 @@
 		}
 
 		.output-wrapper.indo {
-			height: 6rem;
 			margin-bottom: 0;
 		}
 
@@ -388,7 +385,7 @@
 				display: inline-block;
 
 				width: 70%;
-				max-width: 500px;
+				max-width: 400px;
 			}
 
 			#indo_to_rom {
@@ -435,21 +432,20 @@
 	</style>
 	<style id="tab-nav">
 		/* Layout */
-		main {
+		#rom_to_indo {
 			position: relative;
 		}
 		
-		#rom_to_indo {
-			right: 0;		
-		}
 
 		#indo_to_rom {
+			position: relative;
+			z-index: 3;
+			transform: translateX(101%);	
+			/* old code: remove */
 			position: absolute;
 			top: 0;
-			right:0;
-			left: 101%;		
-
-			width: 100%;
+			left: 0;	
+			width: 100%;	
 		}
 
 		a.tab-selector {
@@ -462,12 +458,12 @@
 
 
 		#indo_tab:target ~ section #calc_wrapper #rom_to_indo {
-			right: 101%;
+			transform: translateX(201%);
 		}
 
 
 		#indo_tab:target ~ section #calc_wrapper #indo_to_rom {
-			left: 0;
+			transform: translateX(0);
 		}
 
 		/* Styling */
