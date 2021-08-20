@@ -209,6 +209,7 @@
 		}
 
 		.output-wrapper.indo {
+			height: 5rem;
 			margin-bottom: 0;
 		}
 
@@ -457,20 +458,19 @@
 
 		}
 
-
-		#indo_tab:target ~ section #calc_wrapper #rom_to_indo {
+		.active-indo_to_rom #rom_to_indo {
 			transform: translateX(201%);
 		}
 
 
-		#indo_tab:target ~ section #calc_wrapper #indo_to_rom {
+		.active-indo_to_rom #indo_to_rom {
 			transform: translateX(0);
 		}
 
+
 		/* Styling */
 
-		a.tab-selector, a.tab-selector:link, a.tab-selector:visited,
-		#indo_tab:target + #section_header  a.tab-selector:first-child {
+		a.tab-selector, a.tab-selector:link, a.tab-selector:visited {
 			font-weight: 300;
 			font-size: 1rem;
 
@@ -478,9 +478,7 @@
 			text-decoration: none;	
 		}
 
-		a.tab-selector:first-child,
-		#indo_tab:target + #section_header a[href="#indo_tab"],
-		#roman_tab:target + #indo_tab + #section_header a[href="#roman_tab"] {
+		a.tab-selector.active {
 			font-weight: bold;
 			color: #EF0606;
 		}
@@ -553,15 +551,15 @@
 		
 	</style>
 </head>
-<body>
+<body class="active-rom_to_indo">
 	<div id="container">
 		<span id="roman_tab"></span>
 		<span id="indo_tab"></span>
 		<header id="section_header">
 			<h1>Roman Numeral Converter</h1>
 			<nav id="section_nav">
-				<a href="#roman_tab" class="tab-selector">V &rarr; 5</a>
-	  			<a href="#indo_tab" class="tab-selector">V &larr; 5</a>
+				<a href="#roman_tab" class="tab-selector active" data-tab="rom_to_indo">V &rarr; 5</a>
+	  			<a href="#indo_tab" class="tab-selector" data-tab="indo_to_rom">5 &rarr; V</a>
 			</nav>
 		</header>
 		<section class="section-content-wrapper">
@@ -1016,6 +1014,19 @@
 				reRomanPlace.classList.remove('d-none');
 			}
 
+		});
+	</script>
+	<script id="tab_nav">
+		const navTabs = document.getElementById('section_nav');
+		document.addEventListener('click', (ev)=>{
+			const {target} = ev;
+			ev.preventDefault();
+			if(target.classList.contains('tab-selector')) {
+				navTabs.querySelector('.active').classList.remove('active');
+				target.classList.add('active');
+				document.body.classList = '';
+				document.body.classList.add(`active-${target.dataset.tab}`);
+			}
 		});
 	</script>
 </body>
