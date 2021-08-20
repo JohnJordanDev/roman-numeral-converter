@@ -149,7 +149,7 @@
 			text-align: center;
 		}
 
-   		#main_nav {
+   		#section_nav {
    			text-align: center;
 
 			margin: 0 auto;
@@ -171,7 +171,7 @@
 
 		}
 
-		#main_header {
+		#section_header {
 			position: relative;
 			z-index: 3;
 			width: 100%;
@@ -180,9 +180,10 @@
 
 		}
 
-		.main-content-wrapper {
+		.section-content-wrapper {
 			display: flex;
 			flex-grow: 1;
+			max-width: 100%;
 		}
 
 		#calc_wrapper {
@@ -198,7 +199,7 @@
 			overflow: hidden;
 		}
 
-		main {
+		section {
 			width: 100%;
 			max-width: 350px; 
 
@@ -322,7 +323,7 @@
 		}
 
 		/* Styling */
-		#main_header {
+		#section_header {
 			background-color: white;
 			box-shadow: 0 2px 4px rgba(0,0,0,.5);
 		}
@@ -377,12 +378,12 @@
 
 		@media only screen and (min-width: 768px) {
 
-			#main_nav {
+			#section_nav {
 				max-width: 350px;
 			}
 
 			#calc_wrapper {
-				display: inline-block;
+				display: flex;
 
 				width: 70%;
 				max-width: 400px;
@@ -469,7 +470,7 @@
 		/* Styling */
 
 		a.tab-selector, a.tab-selector:link, a.tab-selector:visited,
-		#indo_tab:target + #main_header  a.tab-selector:first-child {
+		#indo_tab:target + #section_header  a.tab-selector:first-child {
 			font-weight: 300;
 			font-size: 1rem;
 
@@ -478,8 +479,8 @@
 		}
 
 		a.tab-selector:first-child,
-		#indo_tab:target + #main_header a[href="#indo_tab"],
-		#roman_tab:target + #indo_tab + #main_header a[href="#roman_tab"] {
+		#indo_tab:target + #section_header a[href="#indo_tab"],
+		#roman_tab:target + #indo_tab + #section_header a[href="#roman_tab"] {
 			font-weight: bold;
 			color: #EF0606;
 		}
@@ -556,14 +557,14 @@
 	<div id="container">
 		<span id="roman_tab"></span>
 		<span id="indo_tab"></span>
-		<header id="main_header">
+		<header id="section_header">
 			<h1>Roman Numeral Converter</h1>
-			<nav id="main_nav">
+			<nav id="section_nav">
 				<a href="#roman_tab" class="tab-selector">V &rarr; 5</a>
 	  			<a href="#indo_tab" class="tab-selector">V &larr; 5</a>
 			</nav>
 		</header>
-		<section class="main-content-wrapper">
+		<section class="section-content-wrapper">
 			<div class="sidebar-banner left">
 				<div class="icon-wrapper d-table">
 					<div class="icons-parent">
@@ -574,70 +575,71 @@
 						<div>V</div>
 					</div>
 				</div>	
-			</div><div id="calc_wrapper">
-				<main id="rom_to_indo">
-			  	<section class="output-wrapper indo entered d-table">
-			  		<div class="d-cell v-middle">
-			  			<output id="result_indo" name="result" for="input_roman"></output>
-			  			<span class="placeholder d-table">Converted <strong>Roman</strong> number will appear here</span>
-			  		</div>
-			  	</section>
-			  	<section class="output-wrapper border-t-b d-table">
-			  		<output class="input-roman d-cell v-middle" id="input_roman" name="input"></output>
-			  	</section>
-			  	<section id="numeral_input_pad" class="numeral-wrapper">
-			  		<div class="row">
-			  			<button class="numeral" data-index="0" value="M">M</button>
-			  			<button class="numeral" data-index="1" value="D">D</button>
-			  			<button class="numeral" data-index="2" value="C">C</button>
-			  		</div>
-			  		<div class="row">
-			  			<button class="numeral" data-index="3" value="L">L</button>
-			  			<button class="numeral" data-index="4" value="X">X</button>
-			  			<button class="numeral" data-index="5" value="V">V</button>
-			  		</div>
-			  		<div class="row">
-			  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
-			  			<button class="numeral" data-index="6" value="I">I</button>
-			  			<button class="delete" disabled="disabled"><</button>
-			  		</div>
-			  	</section>
+			</div><main id="calc_wrapper" class="calc_mainWrap">
+				<section id="rom_to_indo">
+				  	<section class="output-wrapper indo entered d-table">
+				  		<div class="d-cell v-middle">
+				  			<output id="result_indo" name="result" for="input_roman"></output>
+				  			<span class="placeholder d-table">Converted <strong>Roman</strong> number will appear here</span>
+				  		</div>
+				  	</section>
+				  	<section class="output-wrapper border-t-b d-table">
+				  		<output class="input-roman d-cell v-middle" id="input_roman" name="input"></output>
+				  	</section>
+				  	<section id="numeral_input_pad" class="numeral-wrapper">
+				  		<div class="row">
+				  			<button class="numeral" data-index="0" value="M">M</button>
+				  			<button class="numeral" data-index="1" value="D">D</button>
+				  			<button class="numeral" data-index="2" value="C">C</button>
+				  		</div>
+				  		<div class="row">
+				  			<button class="numeral" data-index="3" value="L">L</button>
+				  			<button class="numeral" data-index="4" value="X">X</button>
+				  			<button class="numeral" data-index="5" value="V">V</button>
+				  		</div>
+				  		<div class="row">
+				  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
+				  			<button class="numeral" data-index="6" value="I">I</button>
+				  			<button class="delete" disabled="disabled"><</button>
+				  		</div>
+				  	</section>
+				</section>
+				<section id="indo_to_rom">
+					<section class="output-wrapper converted-roman d-table">
+						<div class="d-cell v-middle">
+							<output id="result_roman" name="result" for="input_indo"></output>
+				  			<span class="placeholder d-table">Converted <strong>Indo-Arabic</strong> number will appear here</span>
+						</div>	
+				  	</section>
+				  	<section class="output-wrapper border-t-b d-table tooltip-wrapper">
+				  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
+				  		<span id="tooltip_large_input" class="tooltip red">3,999 is the largest input allowed, sorry!</span>
+				  	</section>
+					<section id="indo_input_pad" class="digit-wrapper">
+				  		<div class="row">
+				  			<button class="numeral indo" value="1">1</button>
+				  			<button class="numeral indo" value="2">2</button>
+				  			<button class="numeral indo" value="3">3</button>
+				  		</div>
+				  		<div class="row">
+				  			<button class="numeral indo" value="4">4</button>
+				  			<button class="numeral indo" value="5">5</button>
+				  			<button class="numeral indo" value="6">6</button>
+				  		</div>
+				  		<div class="row">
+				  			<button class="numeral indo" value="7">7</button>
+				  			<button class="numeral indo" value="8">8</button>
+				  			<button class="numeral indo" value="9">9</button>
+				  		</div>
+				  		<div class="row">
+				  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
+				  			<button class="numeral indo" value="0">0</button>
+				  			<button id="delete_indo" class="delete indo" disabled="disabled"><</button>
+				  		</div>
+				  	</section>
+				</section>
 			</main>
-			<main id="indo_to_rom">
-				<section class="output-wrapper converted-roman d-table">
-					<div class="d-cell v-middle">
-						<output id="result_roman" name="result" for="input_indo"></output>
-			  			<span class="placeholder d-table">Converted <strong>Indo-Arabic</strong> number will appear here</span>
-					</div>	
-			  	</section>
-			  	<section class="output-wrapper border-t-b d-table tooltip-wrapper">
-			  		<output class="input-roman d-cell v-middle" id="input_indo" name="input"></output>
-			  		<span id="tooltip_large_input" class="tooltip red">3,999 is the largest input allowed, sorry!</span>
-			  	</section>
-				<section id="indo_input_pad" class="digit-wrapper">
-			  		<div class="row">
-			  			<button class="numeral indo" value="1">1</button>
-			  			<button class="numeral indo" value="2">2</button>
-			  			<button class="numeral indo" value="3">3</button>
-			  		</div>
-			  		<div class="row">
-			  			<button class="numeral indo" value="4">4</button>
-			  			<button class="numeral indo" value="5">5</button>
-			  			<button class="numeral indo" value="6">6</button>
-			  		</div>
-			  		<div class="row">
-			  			<button class="numeral indo" value="7">7</button>
-			  			<button class="numeral indo" value="8">8</button>
-			  			<button class="numeral indo" value="9">9</button>
-			  		</div>
-			  		<div class="row">
-			  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
-			  			<button class="numeral indo" value="0">0</button>
-			  			<button id="delete_indo" class="delete indo" disabled="disabled"><</button>
-			  		</div>
-			  	</section>
-			</main>
-			</div><div class="sidebar-banner right">
+			<div class="sidebar-banner right">
 				<div class="icon-wrapper d-table">
 					<div class="icons-parent">
 						<div>1</div>
