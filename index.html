@@ -598,7 +598,7 @@
 				  		<div class="row">
 				  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
 				  			<button class="numeral" data-index="6" value="I">I</button>
-				  			<button class="delete" disabled="disabled"><</button>
+				  			<button class="delete" disabled="disabled" value="<"><</button>
 				  		</div>
 				  	</section>
 				</section>
@@ -632,7 +632,7 @@
 				  		<div class="row">
 				  			<button class="spacer" disabled="disabled" style="opacity: 0"></button>
 				  			<button class="numeral indo" value="0">0</button>
-				  			<button id="delete_indo" class="delete indo" disabled="disabled"><</button>
+				  			<button id="delete_indo" class="delete indo" disabled="disabled" value="<"><</button>
 				  		</div>
 				  	</section>
 				</section>
@@ -956,7 +956,6 @@
 			var l = listUnits, d = dict, roman = '';
 			for(var i = 0; i < l.length; i++) {
 				if(d[listUnits[i]]) {
-					console.log('Roman numeral is: ', d[listUnits[i]] );
 					roman += d[listUnits[i]];
 				} 
 			}
@@ -1026,6 +1025,63 @@
 				target.classList.add('active');
 				document.body.classList = '';
 				document.body.classList.add(`active-${target.dataset.tab}`);
+			}
+		});
+	</script>
+	<script>
+		const numCodesIndo = {
+			// backspace
+			8: "<",
+			// delete
+			46: "<",
+			48: "0",
+			49: 1, 
+			50: 2,
+			51: 3,
+			52: 4,
+			53: 5,
+			54: 6,
+			55: 7,
+			56: 8,
+			57: 9,
+			// ,
+			188: "<"
+		};
+		const numCodesRoman = {
+			// backspace
+			8: "<",
+			// delete
+			46: "<",
+			67: "C",
+			68: "D",
+			73: "I",
+			76: "L",
+			77: "M",
+			86: "V",
+			88: "X",
+			// ,
+			188: "<"
+		};
+		const indoSection = document.getElementById("indo_to_rom"),
+			romanSection = document.getElementById("rom_to_indo");
+			
+		document.addEventListener("keydown", e => {
+			if(document.body.classList.contains("active-rom_to_indo")) {
+				if(46 === e.keyCode) {
+					inputRoman.textContent = "";
+				}
+				if(numCodesRoman[e.keyCode]) {
+					romanSection.querySelector(`[value='${numCodesRoman[e.keyCode]}']`).click();
+				}
+			}
+			
+			if(document.body.classList.contains("active-indo_to_rom")) {
+				if(46 === e.keyCode) {
+					inIndo.textContent = "";
+				}
+				if(numCodesIndo[e.keyCode].toString()) {
+					indoSection.querySelector(`[value='${numCodesIndo[e.keyCode]}']`).click();
+				}
 			}
 		});
 	</script>
