@@ -1021,10 +1021,22 @@
 			const {target} = ev;
 			ev.preventDefault();
 			if(target.classList.contains('tab-selector')) {
+				console.log('clickednav elem is: ', target);
+
+				if("indo_to_rom" === target.dataset.tab) {
+					indoSection.querySelectorAll("button").forEach(e => e.tabIndex = 0);
+					romanSection.querySelectorAll("button").forEach(e => e.tabIndex = -1);
+				}
+				if("rom_to_indo" === target.dataset.tab) {
+					romanSection.querySelectorAll("button").forEach(e => e.tabIndex = 0);
+					indoSection.querySelectorAll("button").forEach(e => e.tabIndex = -1);
+				}
+
 				navTabs.querySelector('.active').classList.remove('active');
 				target.classList.add('active');
 				document.body.classList = '';
 				document.body.classList.add(`active-${target.dataset.tab}`);
+			
 			}
 		});
 	</script>
@@ -1064,6 +1076,8 @@
 		};
 		const indoSection = document.getElementById("indo_to_rom"),
 			romanSection = document.getElementById("rom_to_indo");
+
+		let clickedElem;
 			
 		document.addEventListener("keydown", e => {
 			if(document.body.classList.contains("active-rom_to_indo")) {
@@ -1071,7 +1085,9 @@
 					inputRoman.textContent = "";
 				}
 				if(numCodesRoman[e.keyCode]) {
-					romanSection.querySelector(`[value='${numCodesRoman[e.keyCode]}']`).click();
+					clickedElem = romanSection.querySelector(`[value='${numCodesRoman[e.keyCode]}']`);
+					clickedElem.click();
+					clickedElem.focus();
 				}
 			}
 			
@@ -1079,11 +1095,14 @@
 				if(46 === e.keyCode) {
 					inIndo.textContent = "";
 				}
-				if(numCodesIndo[e.keyCode].toString()) {
-					indoSection.querySelector(`[value='${numCodesIndo[e.keyCode]}']`).click();
+				if(numCodesIndo[e.keyCode]) {
+					clickedElem = indoSection.querySelector(`[value='${numCodesIndo[e.keyCode]}']`);
+					clickedElem.click();
+					clickedElem.focus();
 				}
 			}
 		});
+
 	</script>
 </body>
 </html>
